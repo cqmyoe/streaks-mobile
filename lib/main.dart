@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:Streaks/sign_up_phone_no.dart';
+import 'package:Streaks/splash_screen.dart';
+import 'package:Streaks/sign_up_otp.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +16,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Streaks'),
+      routes: {
+        '/': (context) => SplashScreen(),
+        '/SignUpPhoneNo': (context) => SignUpPhoneNo(),
+        '/SignUpOTP' : (context) => SignUpOTP(),
+        '/Home' : (context) => MyHomePage(title: 'Streaks'),
+      },
     );
   }
 }
