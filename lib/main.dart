@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_core/amplify_core.dart';
+import 'amplifyconfiguration.dart';
+
 import 'package:Streaks/sign_up_phone_no.dart';
 import 'package:Streaks/splash_screen.dart';
 import 'package:Streaks/sign_up_otp.dart';
@@ -8,7 +12,40 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _amplifyConfigured = false;
+
+  // Instantiate Amplify
+  Amplify amplifyInstance = Amplify();
+
+  @override
+  void initState() {
+    super.initState();
+    _configureAmplify();
+  }
+
+  void _configureAmplify() async {
+    if (!mounted) return;
+
+    AmplifyAuthCognito authPlugin = AmplifyAuthCognito();
+    amplifyInstance.addPlugin(authPlugins: [authPlugin]);
+
+    await amplifyInstance.configure(amplifyconfig);
+
+    try {
+      setState(() {
+        _amplifyConfigured = true;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

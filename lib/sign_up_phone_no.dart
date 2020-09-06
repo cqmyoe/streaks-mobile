@@ -1,7 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_core/amplify_core.dart';
+import 'dart:math';
 
-class SignUpPhoneNo extends StatelessWidget {
-  // This widget is the root of your application.
+String generateRandomString(int len) {
+  var r = Random();
+  return String.fromCharCodes(List.generate(len, (index) => r.nextInt(33) + 89));
+}
+
+class SignUpPhoneNo extends StatefulWidget {
+  @override
+  _SignUpPhoneNo createState() => _SignUpPhoneNo();
+}
+
+class _SignUpPhoneNo extends State<SignUpPhoneNo> {
+  final phoneNumController = TextEditingController();
+
+  @override
+  void dispose() {
+    phoneNumController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,7 +69,7 @@ class SignUpPhoneNo extends StatelessWidget {
             Container(
               padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
               child: Text(
-                'Create a neww account',
+                'Create a new account',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 20.0,
@@ -61,6 +81,7 @@ class SignUpPhoneNo extends StatelessWidget {
               margin: EdgeInsets.symmetric(vertical:5.0, horizontal: 20.0),
               color: Colors.grey[300],
               child: TextField(
+                controller: phoneNumController,
                 decoration: InputDecoration.collapsed(hintText: 'Enter phone number'),
               ),
             ),
@@ -70,8 +91,29 @@ class SignUpPhoneNo extends StatelessWidget {
                   children: <Widget> [
                     Expanded(
                       child: FlatButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/SignUpOTP');
+                        onPressed: () async {
+                          try {
+                            String randomId = generateRandomString(15) + '256UPPERCASE';
+                            Map<String, dynamic> userAttributes = {
+                              "name": randomId + "@domain.com",
+                              "family_name": randomId + " sirname",
+                              "gender": "Male",
+                              "birthdate": "1991-09-14",
+                              "phone_number": phoneNumController.text,
+                              "updated_at": (new DateTime.now().millisecondsSinceEpoch/1000).floor().toString(),
+                            };
+                            SignUpResult res = await Amplify.Auth.signUp(
+                                username: userAttributes['phone_number'],
+                                password: randomId,
+                                options: CognitoSignUpOptions(
+                                    userAttributes: userAttributes
+                                )
+                            );
+                            print(res);
+                            Navigator.pushNamed(context, '/SignUpOTP');
+                          } on AuthError catch (e) {
+                            print(e);
+                          }
                         },
                         child: Text('Verify phone number'),
                         color: Colors.amber,
