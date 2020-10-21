@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  http: any
+  shared_preferences: ^0.5.12
   amplify_core: '<1.0.0'
   amplify_auth_cognito: '<1.0.0'
 

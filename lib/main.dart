@@ -7,6 +7,9 @@ import 'package:Streaks/sign_up_phone_no.dart';
 import 'package:Streaks/splash_screen.dart';
 import 'package:Streaks/sign_up_otp.dart';
 import 'package:Streaks/home_page.dart';
+import 'package:Streaks/habits_page.dart';
+import 'package:Streaks/login.dart';
+import 'package:Streaks/Nutrition_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,6 +21,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // ignore: unused_field
   bool _amplifyConfigured = false;
 
   // Instantiate Amplify
@@ -56,9 +60,13 @@ class _MyAppState extends State<MyApp> {
       ),
       routes: {
         '/': (context) => SplashScreen(),
+        '/HabitsPage': (context) => HabitsPage(),
         '/SignUpPhoneNo': (context) => SignUpPhoneNo(),
-        '/SignUpOTP' : (context) => SignUpOTP(),
-        '/Home' : (context) => MyHomePage(title: 'Streaks'),
+        '/SignUpOTP': (context) => SignUpOTP(),
+        '/Home': (context) => MyHomePage(title: 'Streaks'),
+        '/LogIn': (context) => login(),
+        '/Nutrition': (context) => Nutrition(),
+        //'/': (context) => login(),
       },
     );
   }

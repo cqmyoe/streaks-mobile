@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -9,14 +10,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   void _closeDrawer() {
     Navigator.of(context).pop();
   }
@@ -36,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: const Color(0xFFCCA5F5),
                 padding: EdgeInsets.all(0.0),
                 shape: CircleBorder(),
-                onPressed: _incrementCounter,
+                onPressed: () {},
               ),
             ),
             SizedBox(width: 5),
@@ -47,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: const Color(0xFF42A5A5),
                   padding: EdgeInsets.all(0.0),
                   shape: CircleBorder(),
-                  onPressed: _incrementCounter,
+                  onPressed: () {},
                 )),
             SizedBox(width: 5),
             SizedBox(
@@ -57,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: const Color(0xBB42A5F5),
                   padding: EdgeInsets.all(0.0),
                   shape: CircleBorder(),
-                  onPressed: _incrementCounter,
+                  onPressed: () {},
                 )),
             SizedBox(width: 15)
           ]),
@@ -81,20 +74,80 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+              child: Text('Calendar'),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            Expanded(
+                child: Container(
+              margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              color: Colors.red,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                      flex: 1,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(4, 4, 4, 4),
+                        child: Expanded(
+                          child: Icon(
+                            Icons.check_box,
+                            size: 100,
+                          ),
+                        ),
+                      )),
+                  Expanded(child: Container()),
+                ],
+              ),
+            )),
+            Expanded(
+                child: Container(
+              margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              color: Colors.blue,
+            )),
+            Expanded(
+                child: Container(
+              margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              color: Colors.amber,
+              child: Center(
+                child: ListTile(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/HabitsPage');
+                  },
+                  title: Text(
+                    'My Habits',
+                  ),
+                ),
+              ),
+            )),
+            Expanded(
+                child: Container(
+              margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              color: Colors.greenAccent,
+              child: Center(
+                child: ListTile(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/Nutrition');
+                  },
+                  title: Text(
+                    'Nutrition',
+                  ),
+                ),
+              ),
+            )),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+              child: Text('Completed a CqMyOE program. Can\'t see attendance?'),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: FlatButton(
+                onPressed: () {},
+                child: Text('Click Here'),
+              ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ),
     );
   }
