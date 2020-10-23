@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Nutrition extends StatefulWidget {
   @override
@@ -15,12 +16,13 @@ class _Nutrition extends State<Nutrition> {
     super.dispose();
   }
 
+  DateTime now = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nutrition'),
-        backgroundColor: Colors.greenAccent,
+        title: Text('CqMyOE via Nutrition'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -28,10 +30,33 @@ class _Nutrition extends State<Nutrition> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              FlatButton(
+                onPressed: () {
+                  showDatePicker(
+                    context: context,
+                    initialDate: now,
+                    firstDate: DateTime(2020),
+                    lastDate: DateTime.now(),
+                  ).then(
+                    (date) => {
+                      if (date != null)
+                        {
+                          setState(() {
+                            now = date;
+                          })
+                        }
+                    },
+                  );
+                },
+                child: Text(
+                  DateFormat('dd-MMM').format(now),
+                ),
+              ),
               Card(
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Calories'),
@@ -53,6 +78,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Net Carbs'),
@@ -74,6 +100,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Proteins'),
@@ -95,6 +122,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Pure Fats'),
@@ -116,9 +144,10 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Green juice'),
+                        child: Text('Green juice (in glass)'),
                       ),
                     ),
                     Expanded(
@@ -137,9 +166,10 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Green intake'),
+                        child: Text('Green intake (in cups)'),
                       ),
                     ),
                     Expanded(
@@ -158,6 +188,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Lemon'),
@@ -179,9 +210,10 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('ACV'),
+                        child: Text('ACV (in tea spoons)'),
                       ),
                     ),
                     Expanded(
@@ -189,7 +221,7 @@ class _Nutrition extends State<Nutrition> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           InputText(),
-                          Text('/ 1 spoon'),
+                          Text('/ 1'),
                         ],
                       ),
                     ),
@@ -200,6 +232,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Intermittent Fasting'),
@@ -221,13 +254,18 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Salt awareness'),
                       ),
                     ),
                     Expanded(
-                      child: CheckBox(),
+                      child: Row(
+                        children: [
+                          CheckBox(),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -236,13 +274,18 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Yog/Walk/Stairs'),
                       ),
                     ),
                     Expanded(
-                      child: CheckBox(),
+                      child: Row(
+                        children: [
+                          CheckBox(),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -251,13 +294,18 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Sleep of 7-8 hours'),
                       ),
                     ),
                     Expanded(
-                      child: CheckBox(),
+                      child: Row(
+                        children: [
+                          CheckBox(),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -266,13 +314,18 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Kaizen 1% improvement'),
                       ),
                     ),
                     Expanded(
-                      child: CheckBox(),
+                      child: Row(
+                        children: [
+                          CheckBox(),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -281,6 +334,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Soaked nuts'),
@@ -302,6 +356,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Seeds'),
@@ -323,9 +378,10 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Sugar'),
+                        child: Text('Sugar (in table spoons)'),
                       ),
                     ),
                     Expanded(
@@ -333,7 +389,7 @@ class _Nutrition extends State<Nutrition> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           InputText(),
-                          Text('/ 1 table spoon'),
+                          Text('/ 1'),
                         ],
                       ),
                     ),
@@ -344,6 +400,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Sunlight'),
@@ -365,6 +422,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Breathing'),
@@ -386,6 +444,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Ready for tomorrow'),
@@ -407,9 +466,10 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Proteins'),
+                        child: Text('Sources of Fat'),
                       ),
                     ),
                     Expanded(
@@ -421,7 +481,7 @@ class _Nutrition extends State<Nutrition> {
                             height: 20,
                             child: TextField(
                               controller: inputTextController,
-                              keyboardType: TextInputType.number,
+                              //keyboardType: TextInputType.number,
                             ),
                           ),
                         ],
@@ -455,7 +515,7 @@ class _InputText extends State<InputText> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 50,
+      width: 70,
       height: 20,
       child: TextField(
         controller: inputTextController,
@@ -488,41 +548,3 @@ class _CheckBox extends State<CheckBox> {
     );
   }
 }
-
-/*Expanded(
-    child: ListView.builder(
-      itemCount: nutritionTemplate.length,
-      itemBuilder: (context, index) {
-        return Card(
-          margin: EdgeInsets.fromLTRB(2, 1, 2, 1),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: ListTile(
-                  contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  onTap: () {},
-                  title: Text(
-                    nutritionTemplate[index].toString(),
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InputText(),
-                    Text('/2000'),
-                  ],
-                ),
-              )
-            ],
-          ),
-        );
-      },
-    ),
-  ),*/

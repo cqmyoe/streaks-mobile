@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
         '/SignUpOTP': (context) => SignUpOTP(),
         '/Home': (context) => MyHomePage(title: 'Streaks'),
         '/LogIn': (context) => login(),
-        '/Nutrition': (context) => Nutrition(),
+        '/NutritionPage': (context) => Nutrition(),
         //'/': (context) => login(),
       },
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -10,6 +11,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  DateTime now = DateTime.now();
+
   void _closeDrawer() {
     Navigator.of(context).pop();
   }
@@ -18,7 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(widget.title),
+          title: Text('Home'),
           automaticallyImplyLeading: true,
           titleSpacing: 0.0,
           actions: <Widget>[
@@ -74,67 +77,564 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-              child: Text('Calendar'),
+            FlatButton(
+              onPressed: () {
+                showDatePicker(
+                  context: context,
+                  initialDate: now,
+                  firstDate: DateTime(2020),
+                  lastDate: DateTime.now(),
+                ).then(
+                  (date) => {
+                    if (date != null)
+                      {
+                        setState(() {
+                          now = date;
+                        })
+                      }
+                  },
+                );
+              },
+              child: Text(
+                DateFormat('dd-MMM').format(now),
+              ),
             ),
             Expanded(
-                child: Container(
-              margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-              color: Colors.red,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                      flex: 1,
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(4, 4, 4, 4),
-                        child: Expanded(
-                          child: Icon(
-                            Icons.check_box,
-                            size: 100,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                color: Colors.grey[300],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Center(
+                              child: Text(
+                                'CqMyOE via Yog',
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      )),
-                  Expanded(child: Container()),
-                ],
-              ),
-            )),
-            Expanded(
-                child: Container(
-              margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-              color: Colors.blue,
-            )),
-            Expanded(
-                child: Container(
-              margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-              color: Colors.amber,
-              child: Center(
-                child: ListTile(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/HabitsPage');
-                  },
-                  title: Text(
-                    'My Habits',
-                  ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 7)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 6)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 5)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 4)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 3)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 2)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 1)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    CheckBox(),
+                  ],
                 ),
               ),
-            )),
+            ),
             Expanded(
-                child: Container(
-              margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-              color: Colors.greenAccent,
-              child: Center(
-                child: ListTile(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/Nutrition');
-                  },
-                  title: Text(
-                    'Nutrition',
-                  ),
+              child: Container(
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                color: Colors.grey[300],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Center(
+                              child: Text(
+                                'CqMyOE via Dhyaan',
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 7)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 6)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 5)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 4)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 3)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 2)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 1)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    CheckBox(),
+                  ],
                 ),
               ),
-            )),
+            ),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                color: Colors.grey[300],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Center(
+                              child: Text(
+                                'CqMyOE via Habits',
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 7)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 6)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 5)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 4)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 3)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 2)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 1)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        return IconButton(
+                          icon: Icon(
+                            Icons.fast_forward,
+                            color: Colors.blue,
+                          ),
+                          iconSize: constraints.biggest.height,
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/HabitsPage');
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                color: Colors.grey[300],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Center(
+                              child: Text(
+                                'CqMyOE via Nutrition',
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 7)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 6)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 5)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 4)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 3)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 2)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(DateFormat('E').format(
+                                      now.subtract(new Duration(days: 1)))),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Icon(
+                                    Icons.check_box,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        return IconButton(
+                          icon: Icon(
+                            Icons.fast_forward,
+                            color: Colors.blue,
+                          ),
+                          iconSize: constraints.biggest.height,
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/NutritionPage');
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
             Container(
               padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: Text('Completed a CqMyOE program. Can\'t see attendance?'),
@@ -149,6 +649,35 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CheckBox extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _CheckBox();
+}
+
+class _CheckBox extends State<CheckBox> {
+  bool _checked = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraint) {
+        return IconButton(
+          icon: Icon(
+            _checked ? Icons.clear : Icons.check,
+          ),
+          color: _checked ? Colors.red : Colors.green,
+          iconSize: constraint.biggest.height,
+          onPressed: () {
+            setState(() {
+              _checked = !_checked;
+            });
+          },
+        );
+      },
     );
   }
 }

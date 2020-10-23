@@ -89,6 +89,7 @@ class _SignUpOTP extends State<SignUpOTP> {
                     child: FlatButton(
                       onPressed: () async {
                         try {
+                          // ignore: unused_local_variable
                           SignUpResult res = await Amplify.Auth.confirmSignUp(
                             username: userAttributes['phone_number'],
                             confirmationCode: otpController.text,

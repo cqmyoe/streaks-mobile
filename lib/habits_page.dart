@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:intl/intl.dart';
+
 List<String> num = ['wake up at 10'];
 
 class HabitsPage extends StatefulWidget {
@@ -19,36 +21,44 @@ class _HabitsPage extends State<HabitsPage> {
     TextEditingController myController = TextEditingController();
 
     return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('New Habit'),
-            content: TextField(
-              controller: myController,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('New Habit'),
+          content: TextField(
+            controller: myController,
+          ),
+          actions: [
+            FlatButton(
+              child: Text('Submit'),
+              onPressed: () {
+                Navigator.of(context).pop(myController.text.toString());
+              },
             ),
-            actions: [
-              FlatButton(
-                child: Text('Submit'),
-                onPressed: () {
-                  Navigator.of(context).pop(myController.text.toString());
-                },
-              ),
-            ],
-          );
-        });
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(null);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
+
+  DateTime now = new DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Habits'),
-        backgroundColor: Colors.redAccent,
+        title: Text('CqMyOE via Habits'),
         actions: [
           IconButton(
             onPressed: () {
               createAlertDialog(context).then((value) {
-                if (value != '') {
+                if (value != '' && value != null) {
                   _resetstate(value);
                 }
               });
@@ -71,13 +81,25 @@ class _HabitsPage extends State<HabitsPage> {
                   flex: 1,
                   child: Container(
                     padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                    child: Text(
-                      '7',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
+                    child: Column(
+                      children: [
+                        Text(
+                          DateFormat('E').format(now),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          DateFormat('d').format(now),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -85,13 +107,29 @@ class _HabitsPage extends State<HabitsPage> {
                   flex: 1,
                   child: Container(
                     padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                    child: Text(
-                      '6',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
+                    child: Column(
+                      children: [
+                        Text(
+                          DateFormat('E').format(
+                            now.subtract(new Duration(days: 1)),
+                          ),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          DateFormat('d').format(
+                            now.subtract(new Duration(days: 1)),
+                          ),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -99,13 +137,29 @@ class _HabitsPage extends State<HabitsPage> {
                   flex: 1,
                   child: Container(
                     padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                    child: Text(
-                      '5',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
+                    child: Column(
+                      children: [
+                        Text(
+                          DateFormat('E').format(
+                            now.subtract(new Duration(days: 2)),
+                          ),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          DateFormat('d').format(
+                            now.subtract(new Duration(days: 2)),
+                          ),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -113,13 +167,29 @@ class _HabitsPage extends State<HabitsPage> {
                   flex: 1,
                   child: Container(
                     padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                    child: Text(
-                      '4',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
+                    child: Column(
+                      children: [
+                        Text(
+                          DateFormat('E').format(
+                            now.subtract(new Duration(days: 3)),
+                          ),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          DateFormat('d').format(
+                            now.subtract(new Duration(days: 3)),
+                          ),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

@@ -105,6 +105,7 @@ class _SignUpPhoneNo extends State<SignUpPhoneNo> {
                                     .floor()
                                     .toString(),
                           };
+                          // ignore: unused_local_variable
                           SignUpResult res = await Amplify.Auth.signUp(
                               username: userAttributes['phone_number'],
                               password: randomId,
