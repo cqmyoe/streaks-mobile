@@ -85,19 +85,9 @@ class _HabitsPage extends State<HabitsPage> {
                       children: [
                         Text(
                           DateFormat('E').format(now),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
                         ),
                         Text(
                           DateFormat('d').format(now),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
                         ),
                       ],
                     ),
@@ -113,20 +103,10 @@ class _HabitsPage extends State<HabitsPage> {
                           DateFormat('E').format(
                             now.subtract(new Duration(days: 1)),
                           ),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
                         ),
                         Text(
                           DateFormat('d').format(
                             now.subtract(new Duration(days: 1)),
-                          ),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
                           ),
                         ),
                       ],
@@ -143,20 +123,10 @@ class _HabitsPage extends State<HabitsPage> {
                           DateFormat('E').format(
                             now.subtract(new Duration(days: 2)),
                           ),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
                         ),
                         Text(
                           DateFormat('d').format(
                             now.subtract(new Duration(days: 2)),
-                          ),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
                           ),
                         ),
                       ],
@@ -173,20 +143,10 @@ class _HabitsPage extends State<HabitsPage> {
                           DateFormat('E').format(
                             now.subtract(new Duration(days: 3)),
                           ),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
                         ),
                         Text(
                           DateFormat('d').format(
                             now.subtract(new Duration(days: 3)),
-                          ),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
                           ),
                         ),
                       ],

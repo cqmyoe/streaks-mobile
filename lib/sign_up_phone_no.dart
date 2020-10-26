@@ -16,10 +16,12 @@ class SignUpPhoneNo extends StatefulWidget {
 
 class _SignUpPhoneNo extends State<SignUpPhoneNo> {
   final phoneNumController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   void dispose() {
     phoneNumController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -80,8 +82,14 @@ class _SignUpPhoneNo extends State<SignUpPhoneNo> {
                 child: TextFormField(
                   controller: phoneNumController,
                   decoration: InputDecoration(
-                    labelText: 'Enter your phone number',
+                    labelText: 'Phone number with +91',
                   ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
+                child: PasswordField(
+                  controller: passwordController,
                 ),
               ),
               Container(
@@ -98,21 +106,24 @@ class _SignUpPhoneNo extends State<SignUpPhoneNo> {
                             "family_name": randomId + " sirname",
                             "gender": "Male",
                             "birthdate": "1991-09-14",
-                            "phone_number": phoneNumController.text,
+                            "phone_number":
+                                '+91' + phoneNumController.text.toString(),
                             "updated_at":
                                 (new DateTime.now().millisecondsSinceEpoch /
                                         1000)
                                     .floor()
                                     .toString(),
                           };
+                          print(userAttributes['phone_number']);
                           // ignore: unused_local_variable
                           SignUpResult res = await Amplify.Auth.signUp(
                               username: userAttributes['phone_number'],
-                              password: randomId,
+                              password: passwordController.text.toString(),
                               options: CognitoSignUpOptions(
                                   userAttributes: userAttributes));
-                          Navigator.pushNamed(context, '/SignUpOTP',
-                              arguments: userAttributes);
+                          if (res.isSignUpComplete)
+                            Navigator.pushNamed(context, '/SignUpOTP',
+                                arguments: userAttributes);
                         } on AuthError catch (e) {
                           print(e);
                         }
@@ -127,6 +138,50 @@ class _SignUpPhoneNo extends State<SignUpPhoneNo> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class PasswordField extends StatefulWidget {
+  final TextEditingController controller;
+
+  const PasswordField({
+    Key key,
+    @required this.controller,
+  })  : assert(controller != null),
+        super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _PasswordField();
+}
+
+class _PasswordField extends State<PasswordField> {
+  bool _showPassword = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: widget.controller,
+      decoration: InputDecoration(
+        labelText: 'Password',
+        suffixIcon: GestureDetector(
+          onTap: () {
+            setState(() {
+              _showPassword = !_showPassword;
+            });
+          },
+          child: Icon(
+            _showPassword ? Icons.visibility : Icons.visibility_off,
+          ),
+        ),
+      ),
+      obscureText: !_showPassword,
+      // ignore: missing_return
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Please enter your password';
+        }
+      },
     );
   }
 }

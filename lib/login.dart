@@ -1,4 +1,7 @@
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_core/amplify_core.dart';
 import 'dart:math';
 
 String generateRandomString(int len) {
@@ -79,7 +82,6 @@ class _login extends State<login> {
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-                //color: Colors.grey[300],
                 child: PasswordField(
                   controller: passwordController,
                 ),
@@ -90,30 +92,20 @@ class _login extends State<login> {
                   Expanded(
                     child: FlatButton(
                       onPressed: () async {
-                        /*try {
-                              String randomId = generateRandomString(15) + '256UPPERCASE';
-                              Map<String, dynamic> userAttributes = {
-                                "name": randomId + "@domain.com",
-                                "family_name": randomId + " sirname",
-                                "gender": "Male",
-                                "birthdate": "1991-09-14",
-                                "phone_number": phoneNumController.text,
-                                "updated_at": (new DateTime.now().millisecondsSinceEpoch/1000).floor().toString(),
-                              };
-                              SignUpResult res = await Amplify.Auth.signUp(
-                                  username: userAttributes['phone_number'],
-                                  password: randomId,
-                                  options: CognitoSignUpOptions(
-                                      userAttributes: userAttributes
-                                  )
-                              );
-                              Navigator.pushNamed(context, '/Home',arguments: userAttributes);
-                            } on AuthError catch (e) {
-                              print(e);
-                            }*/
-                        Navigator.pushNamed(context, '/Home');
+                        try {
+                          SignInResult res = await Amplify.Auth.signIn(
+                            username:
+                                '+91' + phoneNumController.text.toString(),
+                            password: passwordController.text.toString(),
+                          );
+                          print(res.isSignedIn);
+                          /*if (res.isSignedIn)
+                            Navigator.pushNamed(context, '/Home');*/
+                        } on AuthError catch (e) {
+                          print(e);
+                        }
                       },
-                      child: Text('Verify phone number'),
+                      child: Text('Sign In'),
                       color: Colors.amber,
                     ),
                   ),

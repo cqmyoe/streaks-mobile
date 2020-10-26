@@ -101,17 +101,18 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                 color: Colors.grey[300],
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
+                      flex: 2,
                       child: Column(
                         children: [
                           Expanded(
-                            flex: 2,
                             child: Center(
                               child: Text(
                                 'CqMyOE via Yog',
@@ -221,24 +222,26 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
-                    CheckBox(),
+                    Expanded(
+                      child: CheckBox(),
+                    ),
                   ],
                 ),
               ),
             ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                 color: Colors.grey[300],
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
+                      flex: 2,
                       child: Column(
                         children: [
                           Expanded(
-                            flex: 2,
                             child: Center(
                               child: Text(
                                 'CqMyOE via Dhyaan',
@@ -348,21 +351,23 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
-                    CheckBox(),
+                    Expanded(
+                      child: Counter(),
+                    ),
                   ],
                 ),
               ),
             ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                 color: Colors.grey[300],
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: Column(
                         children: [
                           Expanded(
@@ -476,19 +481,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        return IconButton(
-                          icon: Icon(
-                            Icons.fast_forward,
-                            color: Colors.blue,
-                          ),
-                          iconSize: constraints.biggest.height,
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/HabitsPage');
-                          },
-                        );
-                      },
+                    Expanded(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return IconButton(
+                            icon: Icon(
+                              Icons.fast_forward,
+                              color: Colors.blue,
+                            ),
+                            iconSize: constraints.biggest.height,
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/HabitsPage');
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -496,14 +503,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                 color: Colors.grey[300],
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: Column(
                         children: [
                           Expanded(
@@ -617,33 +624,39 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        return IconButton(
-                          icon: Icon(
-                            Icons.fast_forward,
-                            color: Colors.blue,
-                          ),
-                          iconSize: constraints.biggest.height,
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/NutritionPage');
-                          },
-                        );
-                      },
+                    Expanded(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return IconButton(
+                            icon: Icon(
+                              Icons.fast_forward,
+                              color: Colors.blue,
+                            ),
+                            iconSize: constraints.biggest.height,
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/NutritionPage');
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+              margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: Text('Completed a CqMyOE program. Can\'t see attendance?'),
             ),
-            Container(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: FlatButton(
-                onPressed: () {},
-                child: Text('Click Here'),
+            FlatButton(
+              onPressed: () {},
+              child: Text(
+                'Click Here',
+                style: TextStyle(
+                  color: Colors.blue[600],
+                  fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.underline,
+                ),
               ),
             ),
           ],
@@ -665,19 +678,70 @@ class _CheckBox extends State<CheckBox> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraint) {
-        return IconButton(
-          icon: Icon(
-            _checked ? Icons.clear : Icons.check,
-          ),
-          color: _checked ? Colors.red : Colors.green,
-          iconSize: constraint.biggest.height,
-          onPressed: () {
-            setState(() {
-              _checked = !_checked;
-            });
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            return IconButton(
+              icon: Icon(
+                _checked ? Icons.clear : Icons.check,
+              ),
+              color: _checked ? Colors.red : Colors.green,
+              iconSize: constraint.biggest.height,
+              onPressed: () {
+                setState(() {
+                  _checked = !_checked;
+                });
+              },
+            );
           },
         );
       },
+    );
+  }
+}
+
+class Counter extends StatefulWidget {
+  @override
+  _CounterState createState() => _CounterState();
+}
+
+class _CounterState extends State<Counter> {
+  int i = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        IconButton(
+          icon: Icon(Icons.remove_circle),
+          color: Colors.red,
+          onPressed: () {
+            if (i > 0) {
+              i--;
+              setState(() {
+                i = i;
+              });
+            }
+          },
+        ),
+        Text(
+          i.toString(),
+          style: TextStyle(
+            fontSize: 48,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        IconButton(
+          icon: Icon(Icons.add_circle),
+          color: Colors.green,
+          onPressed: () {
+            if (i < 9) {
+              i++;
+              setState(() {
+                i = i;
+              });
+            }
+          },
+        ),
+      ],
     );
   }
 }

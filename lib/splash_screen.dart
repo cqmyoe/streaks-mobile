@@ -27,7 +27,7 @@ class SplashScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                color: Colors.amberAccent,
+                color: Colors.lightBlue[300],
               ),
             ),
             Container(
@@ -44,7 +44,7 @@ class SplashScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                color: Colors.pinkAccent,
+                color: Colors.red[300],
               ),
             ),
             Container(
@@ -61,7 +61,7 @@ class SplashScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                color: Colors.greenAccent,
+                color: Colors.lightGreen[300],
               ),
             ),
           ],
