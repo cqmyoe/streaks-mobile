@@ -1,8 +1,9 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_core/amplify_core.dart';
 import 'dart:math';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 String generateRandomString(int len) {
   var r = Random();
@@ -10,14 +11,12 @@ String generateRandomString(int len) {
       List.generate(len, (index) => r.nextInt(33) + 89));
 }
 
-// ignore: camel_case_types
-class login extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  _login createState() => _login();
+  _Login createState() => _Login();
 }
 
-// ignore: camel_case_types
-class _login extends State<login> {
+class _Login extends State<Login> {
   final phoneNumController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -98,9 +97,15 @@ class _login extends State<login> {
                                 '+91' + phoneNumController.text.toString(),
                             password: passwordController.text.toString(),
                           );
-                          print(res.isSignedIn);
-                          /*if (res.isSignedIn)
-                            Navigator.pushNamed(context, '/Home');*/
+
+                          if (res.isSignedIn) {
+                            SharedPreferences pref =
+                                await SharedPreferences.getInstance();
+                            pref.setString('phoneNo',
+                                '+91' + phoneNumController.text.toString());
+
+                            Navigator.pushReplacementNamed(context, '/Home');
+                          }
                         } on AuthError catch (e) {
                           print(e);
                         }
@@ -153,11 +158,11 @@ class _PasswordField extends State<PasswordField> {
         ),
       ),
       obscureText: !_showPassword,
-      // ignore: missing_return
       validator: (String value) {
         if (value.isEmpty) {
           return 'Please enter your password';
-        }
+        } else
+          return 'All good';
       },
     );
   }

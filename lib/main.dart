@@ -4,12 +4,13 @@ import 'package:amplify_core/amplify_core.dart';
 import 'amplifyconfiguration.dart';
 
 import 'package:Streaks/sign_up_phone_no.dart';
-import 'package:Streaks/splash_screen.dart';
+import 'package:Streaks/first_page.dart';
 import 'package:Streaks/sign_up_otp.dart';
 import 'package:Streaks/home_page.dart';
 import 'package:Streaks/habits_page.dart';
-import 'package:Streaks/login.dart';
+import 'package:Streaks/Login.dart';
 import 'package:Streaks/Nutrition_page.dart';
+import 'package:Streaks/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,8 +22,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // ignore: unused_field
-  bool _amplifyConfigured = false;
+  bool amplifyConfigured = false;
 
   // Instantiate Amplify
   Amplify amplifyInstance = Amplify();
@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
 
     try {
       setState(() {
-        _amplifyConfigured = true;
+        amplifyConfigured = true;
       });
     } catch (e) {
       print(e);
@@ -59,14 +59,14 @@ class _MyAppState extends State<MyApp> {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
+        '/First': (context) => FirstPage(),
         '/': (context) => SplashScreen(),
         '/HabitsPage': (context) => HabitsPage(),
         '/SignUpPhoneNo': (context) => SignUpPhoneNo(),
         '/SignUpOTP': (context) => SignUpOTP(),
         '/Home': (context) => MyHomePage(title: 'Streaks'),
-        '/LogIn': (context) => login(),
+        '/LogIn': (context) => Login(),
         '/NutritionPage': (context) => Nutrition(),
-        //'/': (context) => login(),
       },
     );
   }

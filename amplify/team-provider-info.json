@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-streaksmobile-dev-174655-authRole",
+      "UnauthRoleArn": "arn:aws:iam::202213555331:role/amplify-streaksmobile-dev-174655-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::202213555331:role/amplify-streaksmobile-dev-174655-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-streaksmobile-dev-174655-deployment",
+      "UnauthRoleName": "amplify-streaksmobile-dev-174655-unauthRole",
+      "StackName": "amplify-streaksmobile-dev-174655",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:202213555331:stack/amplify-streaksmobile-dev-174655/7a9046f0-1917-11eb-ad4f-06bc7ae8b9d0",
+      "AmplifyAppId": "d1d0lsskhgeey1"
+    },
+    "categories": {
+      "auth": {
+        "streaksmobilee4f16f75": {}
+      }
+    }
+  }
+}

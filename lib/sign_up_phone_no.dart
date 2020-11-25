@@ -3,6 +3,8 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_core/amplify_core.dart';
 import 'dart:math';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 String generateRandomString(int len) {
   var r = Random();
   return String.fromCharCodes(
@@ -114,16 +116,19 @@ class _SignUpPhoneNo extends State<SignUpPhoneNo> {
                                     .floor()
                                     .toString(),
                           };
-                          print(userAttributes['phone_number']);
-                          // ignore: unused_local_variable
                           SignUpResult res = await Amplify.Auth.signUp(
                               username: userAttributes['phone_number'],
                               password: passwordController.text.toString(),
                               options: CognitoSignUpOptions(
                                   userAttributes: userAttributes));
-                          if (res.isSignUpComplete)
+                          if (res.isSignUpComplete) {
+                            SharedPreferences pref =
+                                await SharedPreferences.getInstance();
+                            pref.setString('phoneNo',
+                                '+91' + phoneNumController.text.toString());
                             Navigator.pushNamed(context, '/SignUpOTP',
                                 arguments: userAttributes);
+                          }
                         } on AuthError catch (e) {
                           print(e);
                         }
@@ -176,11 +181,11 @@ class _PasswordField extends State<PasswordField> {
         ),
       ),
       obscureText: !_showPassword,
-      // ignore: missing_return
       validator: (String value) {
         if (value.isEmpty) {
           return 'Please enter your password';
-        }
+        } else
+          return 'All good';
       },
     );
   }
