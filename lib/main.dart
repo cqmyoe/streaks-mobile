@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_core/amplify_core.dart';
+import 'package:hive/hive.dart';
 import 'amplifyconfiguration.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
 import 'package:Streaks/sign_up_phone_no.dart';
 import 'package:Streaks/first_page.dart';
 import 'package:Streaks/sign_up_otp.dart';
 import 'package:Streaks/home_page.dart';
-import 'package:Streaks/habits_page.dart';
 import 'package:Streaks/Login.dart';
 import 'package:Streaks/Nutrition_page.dart';
 import 'package:Streaks/splash_screen.dart';
+import 'package:Streaks/habits_data_load.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final appDir = await path_provider.getApplicationDocumentsDirectory();
+  Hive.init(appDir.path);
   runApp(MyApp());
 }
 
@@ -61,7 +66,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/First': (context) => FirstPage(),
         '/': (context) => SplashScreen(),
-        '/HabitsPage': (context) => HabitsPage(),
+        '/HabitsPage': (context) => HabitsDataLoad(),
         '/SignUpPhoneNo': (context) => SignUpPhoneNo(),
         '/SignUpOTP': (context) => SignUpOTP(),
         '/Home': (context) => MyHomePage(title: 'Streaks'),

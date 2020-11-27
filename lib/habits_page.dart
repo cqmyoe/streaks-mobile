@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:async';
-
 import 'package:intl/intl.dart';
-
-List<String> num = ['wake up at 10'];
 
 class HabitsPage extends StatefulWidget {
   @override
@@ -12,11 +11,6 @@ class HabitsPage extends StatefulWidget {
 }
 
 class _HabitsPage extends State<HabitsPage> {
-  void _resetstate(String text) {
-    num.add(text);
-    setState(() {});
-  }
-
   Future<String> createAlertDialog(BuildContext context) {
     TextEditingController myController = TextEditingController();
 
@@ -48,6 +42,7 @@ class _HabitsPage extends State<HabitsPage> {
   }
 
   DateTime now = new DateTime.now();
+  final habitsList = Hive.box('Habits');
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +54,8 @@ class _HabitsPage extends State<HabitsPage> {
             onPressed: () {
               createAlertDialog(context).then((value) {
                 if (value != '' && value != null) {
-                  _resetstate(value);
+                  //_resetstate(value);
+                  addHabit(value);
                 }
               });
             },
@@ -156,48 +152,7 @@ class _HabitsPage extends State<HabitsPage> {
               ],
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: num.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    margin: EdgeInsets.fromLTRB(2, 1, 2, 1),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 4,
-                          child: ListTile(
-                            contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                            onTap: () {},
-                            title: Text(
-                              num[index].toString(),
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: CheckBox(),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: CheckBox(),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: CheckBox(),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: CheckBox(),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+              child: _buildListView(),
             ),
           ],
         ),
@@ -229,4 +184,63 @@ class _CheckBox extends State<CheckBox> {
           }),
     );
   }
+}
+
+void addHabit(String newHabit) {
+  Hive.box('Habits').add(newHabit);
+}
+
+Widget _buildListView() {
+  return WatchBoxBuilder(
+    box: Hive.box('Habits'),
+    builder: (context, habitsList) {
+      return ListView.builder(
+        itemCount: habitsList.length,
+        itemBuilder: (context, index) {
+          return Card(
+            margin: EdgeInsets.fromLTRB(2, 1, 2, 1),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: ListTile(
+                    contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    onTap: () {},
+                    title: Text(
+                      habitsList.getAt(index).toString(),
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: CheckBox(),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: CheckBox(),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: CheckBox(),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      habitsList.deleteAt(index);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
 }
