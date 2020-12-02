@@ -4,6 +4,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
+import 'package:Streaks/Models/habit_data.dart';
+import 'package:Streaks/Models/date_time.dart';
 
 class HabitsPage extends StatefulWidget {
   @override
@@ -41,8 +43,8 @@ class _HabitsPage extends State<HabitsPage> {
     );
   }
 
-  DateTime now = new DateTime.now();
-  final habitsList = Hive.box('Habits');
+  // DateTime now = new DateTime.now();
+  // final habitsList = Hive.box<HabitData>('Habit');
 
   @override
   Widget build(BuildContext context) {
@@ -162,24 +164,26 @@ class _HabitsPage extends State<HabitsPage> {
 }
 
 class CheckBox extends StatefulWidget {
+  final bool value;
+  CheckBox(this.value);
   @override
-  State<StatefulWidget> createState() => _CheckBox();
+  State<StatefulWidget> createState() => _CheckBox(value);
 }
 
 class _CheckBox extends State<CheckBox> {
-  bool _checked = true;
-
+  bool checked;
+  _CheckBox(this.checked);
   @override
   Widget build(BuildContext context) {
     return Center(
       child: IconButton(
           icon: Icon(
-            _checked ? Icons.clear : Icons.check,
+            checked ? Icons.check : Icons.clear,
           ),
-          color: _checked ? Colors.red : Colors.green,
+          color: checked ? Colors.green : Colors.red,
           onPressed: () {
             setState(() {
-              _checked = !_checked;
+              checked = !checked;
             });
           }),
     );
@@ -187,12 +191,53 @@ class _CheckBox extends State<CheckBox> {
 }
 
 void addHabit(String newHabit) {
-  Hive.box('Habits').add(newHabit);
+  Map<String, bool> tempMap = Map();
+  tempMap[today] = false;
+  tempMap[yesterday] = true;
+  HabitData temp = new HabitData(newHabit, tempMap);
+  Hive.box<HabitData>('Habit').add(temp);
 }
 
 Widget _buildListView() {
+  final habitsList = Hive.box<HabitData>('Habit');
+  Future<String> changeHabitName(BuildContext context, int index) {
+    TextEditingController myController = TextEditingController();
+    TextEditingValue(text: 'lalit');
+
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('New Habit'),
+          content: TextField(
+            controller: myController,
+          ),
+          actions: [
+            FlatButton(
+              child: Text('Submit'),
+              onPressed: () {
+                HabitData temp1 = new HabitData(
+                    '${habitsList.getAt(index).name}*',
+                    habitsList.getAt(index).record);
+
+                habitsList.putAt(index, temp1);
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(null);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   return WatchBoxBuilder(
-    box: Hive.box('Habits'),
+    box: Hive.box<HabitData>('Habit'),
     builder: (context, habitsList) {
       return ListView.builder(
         itemCount: habitsList.length,
@@ -203,29 +248,53 @@ Widget _buildListView() {
               children: [
                 Expanded(
                   flex: 4,
-                  child: ListTile(
+                  /*child: ListTile(
                     contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                     onTap: () {},
                     title: Text(
-                      habitsList.getAt(index).toString(),
+                      habitsList.getAt(index).name.toString(),
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 15,
+                      ),
+                    ),
+                  ),*/
+                  child: GestureDetector(
+                    onLongPress: () {
+                      changeHabitName(context, index);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      child: Text(
+                        habitsList.getAt(index).name.toString(),
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
                       ),
                     ),
                   ),
                 ),
                 Expanded(
                   flex: 1,
-                  child: CheckBox(),
+                  child: CheckBox(habitsList.getAt(index).record[today]),
                 ),
                 Expanded(
                   flex: 1,
-                  child: CheckBox(),
+                  child: CheckBox(habitsList.getAt(index).record[yesterday]),
                 ),
                 Expanded(
                   flex: 1,
-                  child: CheckBox(),
+                  child: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      HabitData temp1 = new HabitData(
+                          '${habitsList.getAt(index).name}*',
+                          habitsList.getAt(index).record);
+
+                      habitsList.putAt(index, temp1);
+                    },
+                  ),
                 ),
                 Expanded(
                   flex: 1,
@@ -244,3 +313,33 @@ Widget _buildListView() {
     },
   );
 }
+
+/*Future<String> changeHabitName(BuildContext context) {
+  TextEditingController myController = TextEditingController();
+
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('New Habit'),
+        content: TextField(
+          controller: myController,
+        ),
+        actions: [
+          FlatButton(
+            child: Text('Submit'),
+            onPressed: () {
+              Navigator.of(context).pop(myController.text.toString());
+            },
+          ),
+          FlatButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop(null);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}*/

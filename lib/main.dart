@@ -1,3 +1,4 @@
+import 'package:Streaks/Models/habit_data.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_core/amplify_core.dart';
@@ -18,6 +19,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDir.path);
+  Hive.registerAdapter(HabitDataAdapter());
   runApp(MyApp());
 }
 

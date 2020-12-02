@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:Streaks/habits_page.dart';
 import 'package:hive/hive.dart';
+import 'package:Streaks/Models/habit_data.dart';
 
 class HabitsDataLoad extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class _HabitsDataLoad extends State<HabitsDataLoad> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: FutureBuilder(
-        future: Hive.openBox('Habits'),
+        future: Hive.openBox<HabitData>('Habit'),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError)
@@ -28,8 +29,8 @@ class _HabitsDataLoad extends State<HabitsDataLoad> {
 
   @override
   void dispose() {
-    Hive.box('Habits').compact();
-    Hive.box('Habits').close();
+    Hive.box<HabitData>('Habit').compact();
+    Hive.box<HabitData>('Habit').close();
     super.dispose();
   }
 }
