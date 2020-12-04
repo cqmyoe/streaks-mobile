@@ -43,9 +43,6 @@ class _HabitsPage extends State<HabitsPage> {
     );
   }
 
-  // DateTime now = new DateTime.now();
-  // final habitsList = Hive.box<HabitData>('Habit');
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +53,6 @@ class _HabitsPage extends State<HabitsPage> {
             onPressed: () {
               createAlertDialog(context).then((value) {
                 if (value != '' && value != null) {
-                  //_resetstate(value);
                   addHabit(value);
                 }
               });
@@ -165,14 +161,18 @@ class _HabitsPage extends State<HabitsPage> {
 
 class CheckBox extends StatefulWidget {
   final bool value;
-  CheckBox(this.value);
+  final int index;
+  final String date;
+  CheckBox(this.value, this.index, this.date);
   @override
-  State<StatefulWidget> createState() => _CheckBox(value);
+  State<StatefulWidget> createState() => _CheckBox(value, index, date);
 }
 
 class _CheckBox extends State<CheckBox> {
   bool checked;
-  _CheckBox(this.checked);
+  int index;
+  String date;
+  _CheckBox(this.checked, this.index, this.date);
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -182,6 +182,12 @@ class _CheckBox extends State<CheckBox> {
           ),
           color: checked ? Colors.green : Colors.red,
           onPressed: () {
+            final habitsList = Hive.box<HabitData>('HabitDB');
+            Map<String, bool> tempMap = habitsList.getAt(index).record;
+            tempMap[date] = !tempMap[date];
+            HabitData temp1 =
+                new HabitData(habitsList.getAt(index).name, tempMap);
+            habitsList.putAt(index, temp1);
             setState(() {
               checked = !checked;
             });
@@ -192,14 +198,17 @@ class _CheckBox extends State<CheckBox> {
 
 void addHabit(String newHabit) {
   Map<String, bool> tempMap = Map();
-  tempMap[today] = false;
-  tempMap[yesterday] = true;
+  tempMap[day0] = false;
+  tempMap[day1] = false;
+  tempMap[day2] = false;
+  tempMap[day3] = false;
   HabitData temp = new HabitData(newHabit, tempMap);
-  Hive.box<HabitData>('Habit').add(temp);
+  Hive.box<HabitData>('HabitDB').add(temp);
 }
 
 Widget _buildListView() {
-  final habitsList = Hive.box<HabitData>('Habit');
+  final habitsList = Hive.box<HabitData>('HabitDB');
+
   Future<String> changeHabitName(BuildContext context, int index) {
     TextEditingController myController = TextEditingController();
     TextEditingValue(text: 'lalit');
@@ -208,19 +217,35 @@ Widget _buildListView() {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('New Habit'),
+          title: Text('Change Habit'),
           content: TextField(
             controller: myController,
           ),
           actions: [
             FlatButton(
-              child: Text('Submit'),
+              child: Text(
+                'Delete',
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
               onPressed: () {
-                HabitData temp1 = new HabitData(
-                    '${habitsList.getAt(index).name}*',
-                    habitsList.getAt(index).record);
-
-                habitsList.putAt(index, temp1);
+                habitsList.deleteAt(index);
+                Navigator.of(context).pop(null);
+              },
+            ),
+            SizedBox(
+              width: 50,
+            ),
+            FlatButton(
+              child: Text('Update'),
+              onPressed: () {
+                String newName = myController.text;
+                if (newName != '' && newName != null) {
+                  HabitData temp1 =
+                      new HabitData(newName, habitsList.getAt(index).record);
+                  habitsList.putAt(index, temp1);
+                }
                 Navigator.of(context).pop();
               },
             ),
@@ -237,20 +262,33 @@ Widget _buildListView() {
   }
 
   return WatchBoxBuilder(
-    box: Hive.box<HabitData>('Habit'),
+    box: Hive.box<HabitData>('HabitDB'),
     builder: (context, habitsList) {
       return ListView.builder(
         itemCount: habitsList.length,
         itemBuilder: (context, index) {
+          if (habitsList.getAt(index).record[day0] == null) {
+            Map<String, bool> tempMap = habitsList.getAt(index).record;
+            tempMap[day0] = false;
+            if (tempMap[day1] == null) tempMap[day1] = false;
+            if (tempMap[day2] == null) tempMap[day2] = false;
+            if (tempMap[day3] == null) tempMap[day3] = false;
+            HabitData temp1 =
+                new HabitData(habitsList.getAt(index).name, tempMap);
+            habitsList.putAt(index, temp1);
+          }
           return Card(
             margin: EdgeInsets.fromLTRB(2, 1, 2, 1),
             child: Row(
               children: [
                 Expanded(
                   flex: 4,
-                  /*child: ListTile(
+                  child: ListTile(
                     contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                     onTap: () {},
+                    onLongPress: () {
+                      changeHabitName(context, index);
+                    },
                     title: Text(
                       habitsList.getAt(index).name.toString(),
                       textAlign: TextAlign.left,
@@ -258,52 +296,27 @@ Widget _buildListView() {
                         fontSize: 15,
                       ),
                     ),
-                  ),*/
-                  child: GestureDetector(
-                    onLongPress: () {
-                      changeHabitName(context, index);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Text(
-                        habitsList.getAt(index).name.toString(),
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
                   ),
                 ),
                 Expanded(
                   flex: 1,
-                  child: CheckBox(habitsList.getAt(index).record[today]),
+                  child: CheckBox(
+                      habitsList.getAt(index).record[day0], index, day0),
                 ),
                 Expanded(
                   flex: 1,
-                  child: CheckBox(habitsList.getAt(index).record[yesterday]),
+                  child: CheckBox(
+                      habitsList.getAt(index).record[day1], index, day1),
                 ),
                 Expanded(
                   flex: 1,
-                  child: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      HabitData temp1 = new HabitData(
-                          '${habitsList.getAt(index).name}*',
-                          habitsList.getAt(index).record);
-
-                      habitsList.putAt(index, temp1);
-                    },
-                  ),
+                  child: CheckBox(
+                      habitsList.getAt(index).record[day2], index, day2),
                 ),
                 Expanded(
                   flex: 1,
-                  child: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      habitsList.deleteAt(index);
-                    },
-                  ),
+                  child: CheckBox(
+                      habitsList.getAt(index).record[day3], index, day3),
                 ),
               ],
             ),
@@ -313,33 +326,3 @@ Widget _buildListView() {
     },
   );
 }
-
-/*Future<String> changeHabitName(BuildContext context) {
-  TextEditingController myController = TextEditingController();
-
-  return showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: Text('New Habit'),
-        content: TextField(
-          controller: myController,
-        ),
-        actions: [
-          FlatButton(
-            child: Text('Submit'),
-            onPressed: () {
-              Navigator.of(context).pop(myController.text.toString());
-            },
-          ),
-          FlatButton(
-            child: Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop(null);
-            },
-          ),
-        ],
-      );
-    },
-  );
-}*/

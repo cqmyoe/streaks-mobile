@@ -1,4 +1,5 @@
 import 'package:Streaks/Models/habit_data.dart';
+import 'package:Streaks/nutrition_data_load.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_core/amplify_core.dart';
@@ -66,14 +67,14 @@ class _MyAppState extends State<MyApp> {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
-        '/First': (context) => FirstPage(),
+        '/FirstPage': (context) => FirstPage(),
         '/': (context) => SplashScreen(),
-        '/HabitsPage': (context) => HabitsDataLoad(),
+        '/HabitsDataLoad': (context) => HabitsDataLoad(),
         '/SignUpPhoneNo': (context) => SignUpPhoneNo(),
         '/SignUpOTP': (context) => SignUpOTP(),
-        '/Home': (context) => MyHomePage(title: 'Streaks'),
+        '/MyHomePage': (context) => MyHomePage(title: 'Streaks'),
         '/LogIn': (context) => Login(),
-        '/NutritionPage': (context) => Nutrition(),
+        '/NutritionDataLoad': (context) => NutritionDataLoad(),
       },
     );
   }

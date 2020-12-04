@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:Streaks/habits_page.dart';
 import 'package:hive/hive.dart';
 import 'package:Streaks/Models/habit_data.dart';
+import 'Nutrition_page.dart';
 
-class HabitsDataLoad extends StatefulWidget {
+class NutritionDataLoad extends StatefulWidget {
   @override
-  _HabitsDataLoad createState() => _HabitsDataLoad();
+  _NutritionDataLoad createState() => _NutritionDataLoad();
 }
 
-class _HabitsDataLoad extends State<HabitsDataLoad> {
+class _NutritionDataLoad extends State<NutritionDataLoad> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: FutureBuilder(
-        future: Hive.openBox<HabitData>('HabitDB'),
+        future: Hive.openBox<HabitData>('NutritionDB'),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError)
               return Text(snapshot.error.toString());
             else
-              return HabitsPage();
+              return Nutrition();
           } else
             return Scaffold();
         },
@@ -29,8 +29,8 @@ class _HabitsDataLoad extends State<HabitsDataLoad> {
 
   @override
   void dispose() {
-    Hive.box<HabitData>('HabitDB').compact();
-    Hive.box<HabitData>('HabitDB').close();
+    Hive.box<HabitData>('NutritionDB').compact();
+    Hive.box<HabitData>('NutritionDB').close();
     super.dispose();
   }
 }

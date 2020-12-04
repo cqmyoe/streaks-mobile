@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:Streaks/Models/date_time.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -12,6 +14,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   DateTime now = DateTime.now();
+  final yogList = Hive.box<bool>('test');
+  final dhyaanList = Hive.box<int>('test1');
 
   void _closeDrawer() {
     Navigator.of(context).pop();
@@ -72,12 +76,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       // Disable opening the drawer with a swipe gesture.
-      drawerEnableOpenDragGesture: false,
+      drawerEnableOpenDragGesture: true,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            FlatButton(
+            /*FlatButton(
               onPressed: () {
                 showDatePicker(
                   context: context,
@@ -98,10 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text(
                 DateFormat('dd-MMM').format(now),
               ),
-            ),
+            ),*/
             Expanded(
               child: Container(
-                margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                margin: EdgeInsets.fromLTRB(10, 40, 10, 20),
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                 color: Colors.grey[300],
                 child: Row(
@@ -223,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Expanded(
-                      child: CheckBox(),
+                      child: CheckBox(yogList.get(day0)),
                     ),
                   ],
                 ),
@@ -352,7 +356,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Expanded(
-                      child: Counter(),
+                      child: Counter(dhyaanList.get(day0)),
                     ),
                   ],
                 ),
@@ -491,7 +495,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                             iconSize: constraints.biggest.height,
                             onPressed: () {
-                              Navigator.pushNamed(context, '/HabitsPage');
+                              Navigator.pushNamed(context, '/HabitsDataLoad');
                             },
                           );
                         },
@@ -634,7 +638,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                             iconSize: constraints.biggest.height,
                             onPressed: () {
-                              Navigator.pushNamed(context, '/NutritionPage');
+                              Navigator.pushNamed(
+                                  context, '/NutritionDataLoad');
                             },
                           );
                         },
@@ -667,31 +672,31 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class CheckBox extends StatefulWidget {
+  final bool value;
+  CheckBox(this.value);
   @override
-  State<StatefulWidget> createState() => _CheckBox();
+  State<StatefulWidget> createState() => _CheckBox(value);
 }
 
 class _CheckBox extends State<CheckBox> {
-  bool _checked = true;
-
+  bool checked;
+  _CheckBox(this.checked);
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraint) {
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            return IconButton(
-              icon: Icon(
-                _checked ? Icons.clear : Icons.check,
-              ),
-              color: _checked ? Colors.red : Colors.green,
-              iconSize: constraint.biggest.height,
-              onPressed: () {
-                setState(() {
-                  _checked = !_checked;
-                });
-              },
-            );
+        return IconButton(
+          icon: Icon(
+            checked ? Icons.check : Icons.clear,
+          ),
+          color: checked ? Colors.green : Colors.red,
+          iconSize: constraint.biggest.height,
+          onPressed: () {
+            final yogList = Hive.box<bool>('test');
+            yogList.put(day0, !checked);
+            setState(() {
+              checked = !checked;
+            });
           },
         );
       },
@@ -700,12 +705,15 @@ class _CheckBox extends State<CheckBox> {
 }
 
 class Counter extends StatefulWidget {
+  final int value;
+  Counter(this.value);
   @override
-  _CounterState createState() => _CounterState();
+  _CounterState createState() => _CounterState(value);
 }
 
 class _CounterState extends State<Counter> {
-  int i = 0;
+  int i;
+  _CounterState(this.i);
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -716,6 +724,8 @@ class _CounterState extends State<Counter> {
           onPressed: () {
             if (i > 0) {
               i--;
+              final dhyaanList = Hive.box<int>('test1');
+              dhyaanList.put(day0, i);
               setState(() {
                 i = i;
               });
@@ -735,6 +745,8 @@ class _CounterState extends State<Counter> {
           onPressed: () {
             if (i < 9) {
               i++;
+              final dhyaanList = Hive.box<int>('test1');
+              dhyaanList.put(day0, i);
               setState(() {
                 i = i;
               });
