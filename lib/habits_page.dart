@@ -261,6 +261,7 @@ Widget _buildListView() {
     );
   }
 
+  // ignore: deprecated_member_use
   return WatchBoxBuilder(
     box: Hive.box<HabitData>('HabitDB'),
     builder: (context, habitsList) {

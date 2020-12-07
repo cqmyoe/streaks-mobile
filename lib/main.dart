@@ -1,5 +1,3 @@
-import 'package:Streaks/Models/habit_data.dart';
-import 'package:Streaks/nutrition_data_load.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_core/amplify_core.dart';
@@ -12,15 +10,18 @@ import 'package:Streaks/first_page.dart';
 import 'package:Streaks/sign_up_otp.dart';
 import 'package:Streaks/home_page.dart';
 import 'package:Streaks/Login.dart';
-import 'package:Streaks/Nutrition_page.dart';
 import 'package:Streaks/splash_screen.dart';
 import 'package:Streaks/habits_data_load.dart';
+import 'package:Streaks/Models/habit_data.dart';
+import 'package:Streaks/Models/nutrition_data.dart';
+import 'package:Streaks/nutrition_data_load.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDir.path);
   Hive.registerAdapter(HabitDataAdapter());
+  Hive.registerAdapter(NutritionDataAdapter());
   runApp(MyApp());
 }
 
@@ -72,10 +73,23 @@ class _MyAppState extends State<MyApp> {
         '/HabitsDataLoad': (context) => HabitsDataLoad(),
         '/SignUpPhoneNo': (context) => SignUpPhoneNo(),
         '/SignUpOTP': (context) => SignUpOTP(),
-        '/MyHomePage': (context) => MyHomePage(title: 'Streaks'),
+        '/HomePage': (context) => MyHomePage(title: 'Streak'),
         '/LogIn': (context) => Login(),
         '/NutritionDataLoad': (context) => NutritionDataLoad(),
       },
     );
   }
+
+  /*@override
+  void dispose() {
+    Hive.box<NutritionData>('NutritionDB').compact();
+    Hive.box<NutritionData>('NutritionDB').close();
+    Hive.box<HabitData>('HabitDB').compact();
+    Hive.box<HabitData>('HabitDB').close();
+    Hive.box<bool>('YogDB').compact();
+    Hive.box<bool>('YogDB').close();
+    Hive.box<int>('DhyaanDB').compact();
+    Hive.box<int>('DhyaanDB').close();
+    super.dispose();
+  }*/
 }

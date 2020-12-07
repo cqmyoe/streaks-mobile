@@ -27,10 +27,10 @@ class _HabitsDataLoad extends State<HabitsDataLoad> {
     );
   }
 
-  @override
+  /*@override
   void dispose() {
     Hive.box<HabitData>('HabitDB').compact();
     Hive.box<HabitData>('HabitDB').close();
     super.dispose();
-  }
+  }*/
 }

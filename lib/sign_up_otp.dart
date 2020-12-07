@@ -94,7 +94,7 @@ class _SignUpOTP extends State<SignUpOTP> {
                             username: userAttributes['phone_number'],
                             confirmationCode: otpController.text,
                           );
-                          Navigator.pushNamed(context, '/Home',
+                          Navigator.pushNamed(context, '/HomePage',
                               arguments: userAttributes);
                         } on AuthError catch (e) {
                           print(e);

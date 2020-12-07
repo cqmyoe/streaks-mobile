@@ -1,6 +1,8 @@
+import 'package:Streaks/Models/nutrition_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:hive/hive.dart';
+import 'Models/date_time.dart';
 
 class Nutrition extends StatefulWidget {
   @override
@@ -8,15 +10,68 @@ class Nutrition extends StatefulWidget {
 }
 
 class _Nutrition extends State<Nutrition> {
-  final inputTextController = TextEditingController();
+  final nutritionDB = Hive.box<NutritionData>('NutritionDB');
 
-  @override
-  void dispose() {
-    inputTextController.dispose();
-    super.dispose();
+  Future<String> createAlertDialog(BuildContext context) {
+    TextEditingController myController = TextEditingController();
+
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Enter value'),
+          content: TextField(
+            controller: myController,
+            keyboardType: TextInputType.number,
+          ),
+          actions: [
+            FlatButton(
+              child: Text('Submit'),
+              onPressed: () {
+                Navigator.of(context).pop(myController.text.toString());
+              },
+            ),
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(null);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  DateTime now = DateTime.now();
+  Future<String> createAlertDialog1(BuildContext context) {
+    TextEditingController myController = TextEditingController();
+
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Enter value'),
+          content: TextField(
+            controller: myController,
+          ),
+          actions: [
+            FlatButton(
+              child: Text('Submit'),
+              onPressed: () {
+                Navigator.of(context).pop(myController.text.toString());
+              },
+            ),
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(null);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +85,7 @@ class _Nutrition extends State<Nutrition> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              FlatButton(
+              /*FlatButton(
                 onPressed: () {
                   showDatePicker(
                     context: context,
@@ -51,12 +106,12 @@ class _Nutrition extends State<Nutrition> {
                 child: Text(
                   DateFormat('dd-MMM').format(now),
                 ),
-              ),
+              ),*/
               Card(
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Calories'),
@@ -66,7 +121,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[0].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[0] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 2000'),
                         ],
                       ),
@@ -78,7 +154,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Net Carbs'),
@@ -88,7 +164,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[1].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[1] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 350g'),
                         ],
                       ),
@@ -100,7 +197,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Proteins'),
@@ -110,7 +207,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[3].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[3] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 60g'),
                         ],
                       ),
@@ -122,7 +240,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Pure Fats'),
@@ -132,7 +250,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[4].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[4] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 60g'),
                         ],
                       ),
@@ -144,7 +283,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Green juice (in glass)'),
@@ -154,7 +293,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[5].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[5] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 1 glass'),
                         ],
                       ),
@@ -166,7 +326,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Green intake (in cups)'),
@@ -176,7 +336,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[6].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[6] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 5 cups'),
                         ],
                       ),
@@ -188,7 +369,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Lemon'),
@@ -198,7 +379,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[7].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[7] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 2'),
                         ],
                       ),
@@ -210,7 +412,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('ACV (in tea spoons)'),
@@ -220,7 +422,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[8].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[8] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 1'),
                         ],
                       ),
@@ -232,7 +455,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Intermittent Fasting'),
@@ -242,7 +465,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[9].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[9] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 10 hrs'),
                         ],
                       ),
@@ -254,7 +498,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Salt awareness'),
@@ -263,7 +507,7 @@ class _Nutrition extends State<Nutrition> {
                     Expanded(
                       child: Row(
                         children: [
-                          CheckBox(),
+                          CheckBox(10, nutritionDB.get(day0).record[10] ?? '0'),
                         ],
                       ),
                     ),
@@ -274,7 +518,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Yog/Walk/Stairs'),
@@ -283,7 +527,7 @@ class _Nutrition extends State<Nutrition> {
                     Expanded(
                       child: Row(
                         children: [
-                          CheckBox(),
+                          CheckBox(11, nutritionDB.get(day0).record[11] ?? '0'),
                         ],
                       ),
                     ),
@@ -294,7 +538,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Sleep of 7-8 hours'),
@@ -303,7 +547,7 @@ class _Nutrition extends State<Nutrition> {
                     Expanded(
                       child: Row(
                         children: [
-                          CheckBox(),
+                          CheckBox(12, nutritionDB.get(day0).record[12] ?? '0'),
                         ],
                       ),
                     ),
@@ -314,7 +558,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Kaizen 1% improvement'),
@@ -323,7 +567,7 @@ class _Nutrition extends State<Nutrition> {
                     Expanded(
                       child: Row(
                         children: [
-                          CheckBox(),
+                          CheckBox(13, nutritionDB.get(day0).record[13] ?? '0'),
                         ],
                       ),
                     ),
@@ -334,7 +578,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Soaked nuts'),
@@ -344,7 +588,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[14].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[14] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 5'),
                         ],
                       ),
@@ -356,7 +621,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Seeds'),
@@ -366,7 +631,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[15].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[15] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 5'),
                         ],
                       ),
@@ -378,7 +664,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Sugar (in table spoons)'),
@@ -388,7 +674,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[16].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[16] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 1'),
                         ],
                       ),
@@ -400,7 +707,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Sunlight'),
@@ -410,7 +717,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[17].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[17] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 10 min'),
                         ],
                       ),
@@ -422,7 +750,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Breathing'),
@@ -432,7 +760,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[18].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[18] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 2 min'),
                         ],
                       ),
@@ -444,7 +793,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Ready for tomorrow'),
@@ -454,7 +803,28 @@ class _Nutrition extends State<Nutrition> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          InputText(),
+                          SizedBox(
+                            width:
+                                MediaQuery.of(context).size.width * 0.45 - 50,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[19].toString()),
+                              onPressed: () {
+                                createAlertDialog(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[19] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
+                            ),
+                          ),
                           Text('/ 3'),
                         ],
                       ),
@@ -466,7 +836,7 @@ class _Nutrition extends State<Nutrition> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
                         child: Text('Sources of Fat'),
@@ -477,11 +847,24 @@ class _Nutrition extends State<Nutrition> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: 100,
-                            height: 20,
-                            child: TextField(
-                              controller: inputTextController,
-                              //keyboardType: TextInputType.number,
+                            width: MediaQuery.of(context).size.width * 0.45,
+                            child: FlatButton(
+                              child: Text(
+                                  nutritionDB.get(day0).record[20].toString()),
+                              onPressed: () {
+                                createAlertDialog1(context).then((value) {
+                                  if (value != "" && value != null) {
+                                    List<String> temp =
+                                        nutritionDB.get(day0).record;
+                                    temp[20] = value;
+                                    NutritionData temp1 =
+                                        new NutritionData(temp);
+                                    nutritionDB.put(day0, temp1);
+                                    setState(() {});
+                                  }
+                                });
+                              },
+                              color: Colors.grey[200],
                             ),
                           ),
                         ],
@@ -498,51 +881,35 @@ class _Nutrition extends State<Nutrition> {
   }
 }
 
-class InputText extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _InputText();
-}
-
-class _InputText extends State<InputText> {
-  final inputTextController = TextEditingController();
-
-  @override
-  void dispose() {
-    inputTextController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 70,
-      height: 20,
-      child: TextField(
-        controller: inputTextController,
-        keyboardType: TextInputType.number,
-      ),
-    );
-  }
-}
-
 class CheckBox extends StatefulWidget {
+  final int index;
+  final String value;
+  CheckBox(this.index, this.value);
   @override
-  State<StatefulWidget> createState() => _CheckBox();
+  State<StatefulWidget> createState() =>
+      _CheckBox(index, value == '1' ? true : false);
 }
 
 class _CheckBox extends State<CheckBox> {
-  bool _checked = true;
+  bool checked;
+  int index;
+  _CheckBox(this.index, this.checked);
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(
-        _checked ? Icons.clear : Icons.check,
+        checked ? Icons.check : Icons.clear,
       ),
-      color: _checked ? Colors.red : Colors.green,
+      color: checked ? Colors.green : Colors.red,
       onPressed: () {
+        final nutritionDB = Hive.box<NutritionData>('NutritionDB');
+        List<String> temp = nutritionDB.get(day0).record;
+        temp[index] = !checked ? '1' : '0';
+        NutritionData temp1 = new NutritionData(temp);
+        nutritionDB.put(day0, temp1);
         setState(() {
-          _checked = !_checked;
+          checked = !checked;
         });
       },
     );

@@ -1,6 +1,7 @@
+import 'package:Streaks/Models/date_time.dart';
+import 'package:Streaks/Models/nutrition_data.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:Streaks/Models/habit_data.dart';
 import 'Nutrition_page.dart';
 
 class NutritionDataLoad extends StatefulWidget {
@@ -13,13 +14,20 @@ class _NutritionDataLoad extends State<NutritionDataLoad> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: FutureBuilder(
-        future: Hive.openBox<HabitData>('NutritionDB'),
+        future: Hive.openBox<NutritionData>('NutritionDB'),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError)
               return Text(snapshot.error.toString());
-            else
+            else {
+              final nutritionDB = Hive.box<NutritionData>('NutritionDB');
+              if (!nutritionDB.containsKey(day0)) {
+                List<String> temp = new List(30);
+                NutritionData temp1 = new NutritionData(temp);
+                nutritionDB.put(day0, temp1);
+              }
               return Nutrition();
+            }
           } else
             return Scaffold();
         },
@@ -27,10 +35,10 @@ class _NutritionDataLoad extends State<NutritionDataLoad> {
     );
   }
 
-  @override
+  /*@override
   void dispose() {
-    Hive.box<HabitData>('NutritionDB').compact();
-    Hive.box<HabitData>('NutritionDB').close();
+    Hive.box<NutritionData>('NutritionDB').compact();
+    Hive.box<NutritionData>('NutritionDB').close();
     super.dispose();
-  }
+  }*/
 }

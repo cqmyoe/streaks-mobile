@@ -104,7 +104,8 @@ class _Login extends State<Login> {
                             pref.setString('phoneNo',
                                 '+91' + phoneNumController.text.toString());
 
-                            Navigator.pushReplacementNamed(context, '/Home');
+                            Navigator.pushReplacementNamed(
+                                context, '/HomePage');
                           }
                         } on AuthError catch (e) {
                           print(e);

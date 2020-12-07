@@ -18,12 +18,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   getData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    var db = await Hive.openBox<bool>('test');
+    var db = await Hive.openBox<bool>('YogDB');
     if (!db.containsKey(day0)) {
       db.put(day0, false);
     }
 
-    var db1 = await Hive.openBox<int>('test1');
+    var db1 = await Hive.openBox<int>('DhyaanDB');
     if (!db1.containsKey(day0)) {
       db1.put(day0, 0);
     }
@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String phoneNo = pref.getString('phoneNo');
     if (phoneNo != null) {
       Timer(Duration(seconds: 0),
-          () => Navigator.pushReplacementNamed(context, '/MyHomePage'));
+          () => Navigator.pushReplacementNamed(context, '/HomePage'));
     } else {
       Timer(Duration(seconds: 0),
           () => Navigator.pushReplacementNamed(context, '/FirstPage'));
