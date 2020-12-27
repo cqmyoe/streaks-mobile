@@ -22,10 +22,28 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!db.containsKey(day0)) {
       db.put(day0, false);
     }
+    if (!db.containsKey(day1)) {
+      db.put(day1, false);
+    }
+    if (!db.containsKey(day2)) {
+      db.put(day2, false);
+    }
+    if (!db.containsKey(day3)) {
+      db.put(day3, false);
+    }
 
     var db1 = await Hive.openBox<int>('DhyaanDB');
     if (!db1.containsKey(day0)) {
       db1.put(day0, 0);
+    }
+    if (!db1.containsKey(day1)) {
+      db1.put(day1, 0);
+    }
+    if (!db1.containsKey(day2)) {
+      db1.put(day2, 0);
+    }
+    if (!db1.containsKey(day2)) {
+      db1.put(day2, 0);
     }
 
     String phoneNo = pref.getString('phoneNo');

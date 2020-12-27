@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:Streaks/Models/date_time.dart';
+import 'package:Streaks/week_history.dart';
+import 'package:intl/intl.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -14,6 +16,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   DateTime now = DateTime.now();
+  int k = 0;
   final yogList = Hive.box<bool>('YogDB');
   final dhyaanList = Hive.box<int>('DhyaanDB');
 
@@ -23,6 +26,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    String curDate;
+    if (k == 0)
+      curDate = day0;
+    else if (k == 1)
+      curDate = day1;
+    else if (k == 2)
+      curDate = day2;
+    else if (k == 3) curDate = day3;
     return Scaffold(
       appBar: AppBar(
           title: Text('Home'),
@@ -84,28 +95,58 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                /*FlatButton(
-                  onPressed: () {
-                    showDatePicker(
-                      context: context,
-                      initialDate: now,
-                      firstDate: DateTime(2020),
-                      lastDate: DateTime.now(),
-                    ).then(
-                      (date) => {
-                        if (date != null)
-                          {
-                            setState(() {
-                              now = date;
-                            })
-                          }
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          k = 0;
+                        });
                       },
-                    );
-                  },
-                  child: Text(
-                    DateFormat('dd-MMM').format(now),
-                  ),
-                ),*/
+                      child: Text(
+                        DateFormat('dd-MMM').format(now),
+                      ),
+                      color: (k == 0) ? Colors.greenAccent : Colors.grey,
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          k = 1;
+                        });
+                      },
+                      child: Text(
+                        DateFormat('dd-MMM')
+                            .format(now.subtract(new Duration(days: 1))),
+                      ),
+                      color: (k == 1) ? Colors.greenAccent : Colors.grey,
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          k = 2;
+                        });
+                      },
+                      child: Text(
+                        DateFormat('dd-MMM')
+                            .format(now.subtract(new Duration(days: 2))),
+                      ),
+                      color: (k == 2) ? Colors.greenAccent : Colors.grey,
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          k = 3;
+                        });
+                      },
+                      child: Text(
+                        DateFormat('dd-MMM')
+                            .format(now.subtract(new Duration(days: 3))),
+                      ),
+                      color: (k == 3) ? Colors.greenAccent : Colors.grey,
+                    ),
+                  ],
+                ),
                 Expanded(
                   child: Container(
                     margin: EdgeInsets.fromLTRB(10, 40, 10, 20),
@@ -130,11 +171,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),
                               ),
+                              // WeekHistory(),
                             ],
                           ),
                         ),
                         Expanded(
-                          child: CheckBox(yogList.get(day0)),
+                          child: CheckBox(k, yogList.get(curDate)),
                         ),
                       ],
                     ),
@@ -155,7 +197,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               Expanded(
                                 child: Center(
                                   child: Text(
-                                    'CqMyOE via Dhyaan',
+                                    'CqMyOE via Dhyaan' + k.toString(),
                                     style: TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold,
@@ -167,7 +209,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         Expanded(
-                          child: Counter(dhyaanList.get(day0)),
+                          child: Counter(
+                            dhyaanList.get(curDate),
+                            k,
+                          ),
                         ),
                       ],
                     ),
@@ -296,15 +341,27 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class CheckBox extends StatefulWidget {
-  final bool value;
-  CheckBox(this.value);
+  final int k;
+  final bool checked;
+  CheckBox(this.k, this.checked);
   @override
-  State<StatefulWidget> createState() => _CheckBox(value);
+  State<StatefulWidget> createState() => _CheckBox(k, checked);
 }
 
 class _CheckBox extends State<CheckBox> {
   bool checked;
-  _CheckBox(this.checked);
+  int k;
+  _CheckBox(this.k, this.checked);
+
+  @override
+  void didUpdateWidget(covariant CheckBox oldWidget) {
+    if (oldWidget.k != widget.k) {
+      k = widget.k;
+      checked = widget.checked;
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -317,7 +374,15 @@ class _CheckBox extends State<CheckBox> {
           iconSize: constraint.biggest.height,
           onPressed: () {
             final yogList = Hive.box<bool>('YogDB');
-            yogList.put(day0, !checked);
+            String date;
+            if (k == 0)
+              date = day0;
+            else if (k == 1)
+              date = day1;
+            else if (k == 2)
+              date = day2;
+            else if (k == 3) date = day3;
+            yogList.put(date, !checked);
             setState(() {
               checked = !checked;
             });
@@ -329,15 +394,27 @@ class _CheckBox extends State<CheckBox> {
 }
 
 class Counter extends StatefulWidget {
-  final int value;
-  Counter(this.value);
+  final int count;
+  final int k;
+  Counter(this.count, this.k);
   @override
-  _CounterState createState() => _CounterState(value);
+  _CounterState createState() => _CounterState(count, k);
 }
 
 class _CounterState extends State<Counter> {
-  int i;
-  _CounterState(this.i);
+  int count;
+  int k;
+  _CounterState(this.count, this.k);
+
+  @override
+  void didUpdateWidget(covariant Counter oldWidget) {
+    if (oldWidget.k != widget.k) {
+      k = widget.k;
+      count = widget.count;
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -347,18 +424,28 @@ class _CounterState extends State<Counter> {
           icon: Icon(Icons.remove_circle),
           color: Colors.red,
           onPressed: () {
-            if (i > 0) {
-              i--;
+            print(k);
+            String date;
+            if (k == 0)
+              date = day0;
+            else if (k == 1)
+              date = day1;
+            else if (k == 2)
+              date = day2;
+            else if (k == 3) date = day3;
+
+            if (count > 0) {
+              count--;
               final dhyaanList = Hive.box<int>('DhyaanDB');
-              dhyaanList.put(day0, i);
+              dhyaanList.put(date, count);
               setState(() {
-                i = i;
+                count = count;
               });
             }
           },
         ),
         Text(
-          i.toString(),
+          count.toString(),
           style: TextStyle(
             fontSize: 48,
             fontWeight: FontWeight.bold,
@@ -368,12 +455,21 @@ class _CounterState extends State<Counter> {
           icon: Icon(Icons.add_circle),
           color: Colors.green,
           onPressed: () {
-            if (i < 9) {
-              i++;
+            print(k);
+            String date;
+            if (k == 0)
+              date = day0;
+            else if (k == 1)
+              date = day1;
+            else if (k == 2)
+              date = day2;
+            else if (k == 3) date = day3;
+            if (count < 9) {
+              count++;
               final dhyaanList = Hive.box<int>('DhyaanDB');
-              dhyaanList.put(day0, i);
+              dhyaanList.put(date, count);
               setState(() {
-                i = i;
+                count = count;
               });
             }
           },

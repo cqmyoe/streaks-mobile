@@ -26,6 +26,21 @@ class _NutritionDataLoad extends State<NutritionDataLoad> {
                 NutritionData temp1 = new NutritionData(temp);
                 nutritionDB.put(day0, temp1);
               }
+              if (!nutritionDB.containsKey(day1)) {
+                List<String> temp = new List(30);
+                NutritionData temp1 = new NutritionData(temp);
+                nutritionDB.put(day1, temp1);
+              }
+              if (!nutritionDB.containsKey(day2)) {
+                List<String> temp = new List(30);
+                NutritionData temp1 = new NutritionData(temp);
+                nutritionDB.put(day2, temp1);
+              }
+              if (!nutritionDB.containsKey(day3)) {
+                List<String> temp = new List(30);
+                NutritionData temp1 = new NutritionData(temp);
+                nutritionDB.put(day3, temp1);
+              }
               return Nutrition();
             }
           } else

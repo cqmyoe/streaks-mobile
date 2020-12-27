@@ -2,6 +2,7 @@ import 'package:Streaks/Models/nutrition_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'Models/date_time.dart';
 
 class Nutrition extends StatefulWidget {
@@ -11,6 +12,8 @@ class Nutrition extends StatefulWidget {
 
 class _Nutrition extends State<Nutrition> {
   final nutritionDB = Hive.box<NutritionData>('NutritionDB');
+  DateTime now = DateTime.now().toLocal();
+  int k = 0;
 
   Future<String> createAlertDialog(BuildContext context) {
     TextEditingController myController = TextEditingController();
@@ -75,6 +78,14 @@ class _Nutrition extends State<Nutrition> {
 
   @override
   Widget build(BuildContext context) {
+    String curDate;
+    if (k == 0)
+      curDate = day0;
+    else if (k == 1)
+      curDate = day1;
+    else if (k == 2)
+      curDate = day2;
+    else if (k == 3) curDate = day3;
     return Scaffold(
       appBar: AppBar(
         title: Text('CqMyOE via Nutrition'),
@@ -85,28 +96,58 @@ class _Nutrition extends State<Nutrition> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              /*FlatButton(
-                onPressed: () {
-                  showDatePicker(
-                    context: context,
-                    initialDate: now,
-                    firstDate: DateTime(2020),
-                    lastDate: DateTime.now(),
-                  ).then(
-                    (date) => {
-                      if (date != null)
-                        {
-                          setState(() {
-                            now = date;
-                          })
-                        }
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        k = 0;
+                      });
                     },
-                  );
-                },
-                child: Text(
-                  DateFormat('dd-MMM').format(now),
-                ),
-              ),*/
+                    child: Text(
+                      DateFormat('dd-MMM').format(now),
+                    ),
+                    color: (k == 0) ? Colors.greenAccent : Colors.grey,
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        k = 1;
+                      });
+                    },
+                    child: Text(
+                      DateFormat('dd-MMM')
+                          .format(now.subtract(new Duration(days: 1))),
+                    ),
+                    color: (k == 1) ? Colors.greenAccent : Colors.grey,
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        k = 2;
+                      });
+                    },
+                    child: Text(
+                      DateFormat('dd-MMM')
+                          .format(now.subtract(new Duration(days: 2))),
+                    ),
+                    color: (k == 2) ? Colors.greenAccent : Colors.grey,
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        k = 3;
+                      });
+                    },
+                    child: Text(
+                      DateFormat('dd-MMM')
+                          .format(now.subtract(new Duration(days: 3))),
+                    ),
+                    color: (k == 3) ? Colors.greenAccent : Colors.grey,
+                  ),
+                ],
+              ),
               Card(
                 child: Row(
                   children: [
@@ -125,17 +166,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[0].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[0]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[0] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -168,17 +211,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[1].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[1]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[1] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -211,17 +256,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[3].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[3]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[3] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -254,17 +301,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[4].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[4]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[4] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -297,17 +346,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[5].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[5]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[5] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -340,17 +391,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[6].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[6]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[6] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -383,17 +436,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[7].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[7]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[7] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -426,17 +481,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[8].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[8]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[8] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -469,17 +526,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[9].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[9]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[9] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -501,13 +560,17 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Salt awareness'),
+                        child: Text('Salt awareness' + k.toString()),
                       ),
                     ),
                     Expanded(
                       child: Row(
                         children: [
-                          CheckBox(10, nutritionDB.get(day0).record[10] ?? '0'),
+                          CheckBox(
+                            10,
+                            nutritionDB.get(curDate).record[10] ?? '0',
+                            k,
+                          ),
                         ],
                       ),
                     ),
@@ -527,7 +590,11 @@ class _Nutrition extends State<Nutrition> {
                     Expanded(
                       child: Row(
                         children: [
-                          CheckBox(11, nutritionDB.get(day0).record[11] ?? '0'),
+                          CheckBox(
+                            11,
+                            nutritionDB.get(curDate).record[11] ?? '0',
+                            k,
+                          ),
                         ],
                       ),
                     ),
@@ -547,7 +614,11 @@ class _Nutrition extends State<Nutrition> {
                     Expanded(
                       child: Row(
                         children: [
-                          CheckBox(12, nutritionDB.get(day0).record[12] ?? '0'),
+                          CheckBox(
+                            12,
+                            nutritionDB.get(curDate).record[12] ?? '0',
+                            k,
+                          ),
                         ],
                       ),
                     ),
@@ -567,7 +638,11 @@ class _Nutrition extends State<Nutrition> {
                     Expanded(
                       child: Row(
                         children: [
-                          CheckBox(13, nutritionDB.get(day0).record[13] ?? '0'),
+                          CheckBox(
+                            13,
+                            nutritionDB.get(curDate).record[13] ?? '0',
+                            k,
+                          ),
                         ],
                       ),
                     ),
@@ -592,17 +667,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[14].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[14]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[14] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -635,17 +712,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[15].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[15]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[15] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -678,17 +757,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[16].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[16]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[16] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -721,17 +802,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[17].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[17]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[17] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -764,17 +847,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[18].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[18]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[18] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -807,17 +892,19 @@ class _Nutrition extends State<Nutrition> {
                             width:
                                 MediaQuery.of(context).size.width * 0.45 - 50,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[19].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[19]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[19] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -849,17 +936,19 @@ class _Nutrition extends State<Nutrition> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.45,
                             child: FlatButton(
-                              child: Text(
-                                  nutritionDB.get(day0).record[20].toString()),
+                              child: Text(nutritionDB
+                                  .get(curDate)
+                                  .record[20]
+                                  .toString()),
                               onPressed: () {
                                 createAlertDialog1(context).then((value) {
                                   if (value != "" && value != null) {
                                     List<String> temp =
-                                        nutritionDB.get(day0).record;
+                                        nutritionDB.get(curDate).record;
                                     temp[20] = value;
                                     NutritionData temp1 =
                                         new NutritionData(temp);
-                                    nutritionDB.put(day0, temp1);
+                                    nutritionDB.put(curDate, temp1);
                                     setState(() {});
                                   }
                                 });
@@ -884,19 +973,30 @@ class _Nutrition extends State<Nutrition> {
 class CheckBox extends StatefulWidget {
   final int index;
   final String value;
-  CheckBox(this.index, this.value);
+  final int k;
+  CheckBox(this.index, this.value, this.k);
   @override
-  State<StatefulWidget> createState() =>
-      _CheckBox(index, value == '1' ? true : false);
+  State<StatefulWidget> createState() => _CheckBox(index, value, k);
 }
 
 class _CheckBox extends State<CheckBox> {
-  bool checked;
   int index;
-  _CheckBox(this.index, this.checked);
+  String value;
+  int k;
+  _CheckBox(this.index, this.value, this.k);
+
+  @override
+  void didUpdateWidget(covariant CheckBox oldWidget) {
+    if (oldWidget.k != widget.k) {
+      k = widget.k;
+      value = widget.value;
+    }
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool checked = value == '1' ? true : false;
     return IconButton(
       icon: Icon(
         checked ? Icons.check : Icons.clear,
@@ -904,12 +1004,21 @@ class _CheckBox extends State<CheckBox> {
       color: checked ? Colors.green : Colors.red,
       onPressed: () {
         final nutritionDB = Hive.box<NutritionData>('NutritionDB');
-        List<String> temp = nutritionDB.get(day0).record;
+        String date;
+        if (k == 0)
+          date = day0;
+        else if (k == 1)
+          date = day1;
+        else if (k == 2)
+          date = day2;
+        else if (k == 3) date = day3;
+
+        List<String> temp = nutritionDB.get(date).record;
         temp[index] = !checked ? '1' : '0';
         NutritionData temp1 = new NutritionData(temp);
-        nutritionDB.put(day0, temp1);
+        nutritionDB.put(date, temp1);
         setState(() {
-          checked = !checked;
+          value = temp[index];
         });
       },
     );
