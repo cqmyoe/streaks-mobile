@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+class Colors {
+  static const Color PrimaryRed   = const Color(0xFFF46400);
+  static const Color PrimaryBlue  = const Color(0xFF38b6ff);
+  static const Color PrimaryGrey  = const Color(0xFFC4c4c4);
+  static const Color PrimaryWhite = const Color(0xFFF9f9f9);
+  static const Color PrimaryBlack = const Color(0xFF141414);
+
+  static const Color RedDarken10   = const Color(0xFFdc5a00);
+  static const Color RedDarken20   = const Color(0xFFc35000);
+  static const Color RedDarken30   = const Color(0xFFab4600);
+  static const Color RedDarken40   = const Color(0xFF923c00);
+  static const Color RedDarken50   = const Color(0xFF7a3200);
+  static const Color RedDarken60   = const Color(0xFF622800);
+  static const Color RedDarken70   = const Color(0xFF491e00);
+  static const Color RedDarken80   = const Color(0xFF311400);
+  static const Color RedDarken90   = const Color(0xFF180a00);
+  static const Color RedLighten10  = const Color(0xFFf5741a);
+  static const Color RedLighten20  = const Color(0xFFf68333);
+  static const Color RedLighten30  = const Color(0xFFf7934d);
+  static const Color RedLighten40  = const Color(0xFFf8a266);
+  static const Color RedLighten50  = const Color(0xFFfab280);
+  static const Color RedLighten60  = const Color(0xFFfbc199);
+  static const Color RedLighten70  = const Color(0xFFfcd1b3);
+  static const Color RedLighten80  = const Color(0xFFfde0cc);
+  static const Color RedLighten90  = const Color(0xFFfef0e6);
+
+  static const Color BlueDarken10  = const Color(0xFF32a4e6);
+  static const Color BlueDarken20  = const Color(0xFF2d92cc);
+  static const Color BlueDarken30  = const Color(0xFF2d92cc);
+  static const Color BlueDarken40  = const Color(0xFF226d99);
+  static const Color BlueDarken50  = const Color(0xFF1c5b80);
+  static const Color BlueDarken60  = const Color(0xFF164966);
+  static const Color BlueDarken70  = const Color(0xFF11374c);
+  static const Color BlueDarken80  = const Color(0xFF0b2433);
+  static const Color BlueDarken90  = const Color(0xFF061219);
+  static const Color BlueLighten10 = const Color(0xFF4cbdff);
+  static const Color BlueLighten20 = const Color(0xFF60c5ff);
+  static const Color BlueLighten30 = const Color(0xFF74ccff);
+  static const Color BlueLighten40 = const Color(0xFF88d3ff);
+  static const Color BlueLighten50 = const Color(0xFF9cdbff);
+  static const Color BlueLighten60 = const Color(0xFFafe2ff);
+  static const Color BlueLighten70 = const Color(0xFFc3e9ff);
+  static const Color BlueLighten80 = const Color(0xFFd7f0ff);
+  static const Color BlueLighten90 = const Color(0xFFebf8ff);
+
+  static const Color GreyDarken10  = const Color(0xFFb0b0b0);
+  static const Color GreyDarken20  = const Color(0xFF9d9d9d);
+  static const Color GreyDarken30  = const Color(0xFF898989);
+  static const Color GreyDarken40  = const Color(0xFF767676);
+  static const Color GreyDarken50  = const Color(0xFF626262);
+  static const Color GreyDarken60  = const Color(0xFF4e4e4e);
+  static const Color GreyDarken70  = const Color(0xFF3b3b3b);
+  static const Color GreyDarken80  = const Color(0xFF272727);
+  static const Color GreyDarken90  = const Color(0xFF141414);
+  static const Color GreyLighten10 = const Color(0xFFcacaca);
+  static const Color GreyLighten20 = const Color(0xFFd0d0d0);
+  static const Color GreyLighten30 = const Color(0xFFd6d6d6);
+  static const Color GreyLighten40 = const Color(0xFFdcdcdc);
+  static const Color GreyLighten50 = const Color(0xFFe2e2e2);
+  static const Color GreyLighten60 = const Color(0xFFe7e7e7);
+  static const Color GreyLighten70 = const Color(0xFFededed);
+  static const Color GreyLighten80 = const Color(0xFFf3f3f3);
+  static const Color GreyLighten90 = const Color(0xFFf9f9f9);
+}
