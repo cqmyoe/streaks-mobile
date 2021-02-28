@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="PrimaryRed" common-name="BlazeOrange">#F46400</color>
+    <color name="PrimaryBlue" common-name="DodgerBlue">#38b6ff</color>
+    <color name="PrimaryGrey" common-name="Silver">#C4c4c4</color>
+    <color name="PrimaryWhite" common-name="Alabaster">#F9f9f9</color>
+    <color name="PrimaryBlack" common-name="CodGray">#141414</color>
+</resources>
