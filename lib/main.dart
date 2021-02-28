@@ -1,16 +1,16 @@
+import 'amplifyconfiguration.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_core/amplify_core.dart';
 import 'package:hive/hive.dart';
-import 'amplifyconfiguration.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-
+import 'package:Streaks/Themes/Themes.dart' as themes;
 import 'package:Streaks/sign_up_phone_no.dart';
 import 'package:Streaks/first_page.dart';
 import 'package:Streaks/sign_up_otp.dart';
 import 'package:Streaks/home_page.dart';
 import 'package:Streaks/Login.dart';
-import 'package:Streaks/splash_screen.dart';
+import 'package:Streaks/AuthCheck.dart';
 import 'package:Streaks/habits_data_load.dart';
 import 'package:Streaks/Models/habit_data.dart';
 import 'package:Streaks/Models/nutrition_data.dart';
@@ -32,6 +32,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool amplifyConfigured = false;
+  String theme = 'Blue';
 
   // Instantiate Amplify
   Amplify amplifyInstance = Amplify();
@@ -40,6 +41,12 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _configureAmplify();
+  }
+
+  void setTheme(theme) {
+    setState(() {
+      this.theme = theme;
+    });
   }
 
   void _configureAmplify() async {
@@ -52,7 +59,7 @@ class _MyAppState extends State<MyApp> {
 
     try {
       setState(() {
-        amplifyConfigured = true;
+        this.amplifyConfigured = true;
       });
     } catch (e) {
       print(e);
@@ -63,13 +70,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: themes.themeOf[theme],
       routes: {
-        '/FirstPage': (context) => FirstPage(),
-        '/': (context) => SplashScreen(),
+        '/FirstPage': (context) => FirstPage(setTheme: setTheme),
+        '/': (context) => AuthCheck(),
         '/HabitsDataLoad': (context) => HabitsDataLoad(),
         '/SignUpPhoneNo': (context) => SignUpPhoneNo(),
         '/SignUpOTP': (context) => SignUpOTP(),

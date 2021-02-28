@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:Streaks/Models/date_time.dart';
-import 'package:Streaks/week_history.dart';
 import 'package:intl/intl.dart';
 
 class MyHomePage extends StatefulWidget {
