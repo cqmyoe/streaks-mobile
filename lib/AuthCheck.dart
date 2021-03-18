@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hive/hive.dart';
+import 'package:Streaks/Models/date_time.dart';
 
 class AuthCheck extends StatefulWidget {
   @override
@@ -17,6 +19,34 @@ class _AuthCheck extends State<AuthCheck> {
   }
 
   getData() async {
+    var db = await Hive.openBox<bool>('YogDB');
+    if (!db.containsKey(day0)) {
+      db.put(day0, false);
+    }
+    if (!db.containsKey(day1)) {
+      db.put(day1, false);
+    }
+    if (!db.containsKey(day2)) {
+      db.put(day2, false);
+    }
+    if (!db.containsKey(day3)) {
+      db.put(day3, false);
+    }
+
+    var db1 = await Hive.openBox<int>('DhyaanDB');
+    if (!db1.containsKey(day0)) {
+      db1.put(day0, 0);
+    }
+    if (!db1.containsKey(day1)) {
+      db1.put(day1, 0);
+    }
+    if (!db1.containsKey(day2)) {
+      db1.put(day2, 0);
+    }
+    if (!db1.containsKey(day2)) {
+      db1.put(day2, 0);
+    }
+
     SharedPreferences pref = await SharedPreferences.getInstance();
     String phoneNo = pref.getString('phoneNo');
     String route = '/FirstPage';

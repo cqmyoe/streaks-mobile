@@ -196,7 +196,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               Expanded(
                                 child: Center(
                                   child: Text(
-                                    'CqMyOE via Dhyaan' + k.toString(),
+                                    'CqMyOE via Dhyaan',
                                     style: TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold,
