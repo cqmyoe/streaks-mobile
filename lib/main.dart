@@ -11,10 +11,8 @@ import 'package:Streaks/sign_up_otp.dart';
 import 'package:Streaks/home_page.dart';
 import 'package:Streaks/Login.dart';
 import 'package:Streaks/AuthCheck.dart';
-import 'package:Streaks/habits_data_load.dart';
 import 'package:Streaks/Models/habit_data.dart';
 import 'package:Streaks/Models/nutrition_data.dart';
-import 'package:Streaks/nutrition_data_load.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -74,26 +72,11 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/FirstPage': (context) => FirstPage(setTheme: setTheme),
         '/': (context) => AuthCheck(),
-        '/HabitsDataLoad': (context) => HabitsDataLoad(),
         '/SignUpPhoneNo': (context) => SignUpPhoneNo(),
         '/SignUpOTP': (context) => SignUpOTP(),
         '/HomePage': (context) => MyHomePage(title: 'Streak'),
         '/LogIn': (context) => Login(),
-        '/NutritionDataLoad': (context) => NutritionDataLoad(),
       },
     );
   }
-
-  /*@override
-  void dispose() {
-    Hive.box<NutritionData>('NutritionDB').compact();
-    Hive.box<NutritionData>('NutritionDB').close();
-    Hive.box<HabitData>('HabitDB').compact();
-    Hive.box<HabitData>('HabitDB').close();
-    Hive.box<bool>('YogDB').compact();
-    Hive.box<bool>('YogDB').close();
-    Hive.box<int>('DhyaanDB').compact();
-    Hive.box<int>('DhyaanDB').close();
-    super.dispose();
-  }*/
 }
