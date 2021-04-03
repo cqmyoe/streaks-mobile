@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class NameSearch extends SearchDelegate<String> {
   final List<String> names;
-  String result;
+  String? result;
   NameSearch(this.names);
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -21,7 +21,7 @@ class NameSearch extends SearchDelegate<String> {
     return IconButton(
       icon: Icon(Icons.arrow_back),
       onPressed: () {
-        close(context, result);
+        close(context, result ?? '');
       },
     );
   }
@@ -40,7 +40,7 @@ class NameSearch extends SearchDelegate<String> {
           ),
           onTap: () {
             result = suggestions.elementAt(index);
-            close(context, result);
+            close(context, result ?? '');
           },
         );
       },

@@ -1,18 +1,19 @@
+// @dart=2.9
 import 'amplifyconfiguration.dart';
 import 'package:flutter/material.dart';
+import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_core/amplify_core.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-import 'package:Streaks/Themes/Themes.dart' as themes;
-import 'package:Streaks/sign_up_phone_no.dart';
-import 'package:Streaks/first_page.dart';
-import 'package:Streaks/sign_up_otp.dart';
-import 'package:Streaks/home_page.dart';
-import 'package:Streaks/Login.dart';
-import 'package:Streaks/AuthCheck.dart';
-import 'package:Streaks/Models/habit_data.dart';
-import 'package:Streaks/Models/nutrition_data.dart';
+import 'package:streaks/Themes/Themes.dart' as themes;
+import 'package:streaks/sign_up_phone_no.dart';
+import 'package:streaks/first_page.dart';
+import 'package:streaks/sign_up_otp.dart';
+import 'package:streaks/home_page.dart';
+import 'package:streaks/Login.dart';
+import 'package:streaks/AuthCheck.dart';
+import 'package:streaks/state/local_persistence/habit_data.dart';
+import 'package:streaks/state/local_persistence/nutrition_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,16 +30,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool amplifyConfigured = false;
   String theme = 'Blue';
 
-  // Instantiate Amplify
-  Amplify amplifyInstance = Amplify();
-
   @override
-  void initState() {
+  void initState()  {
     super.initState();
-    _configureAmplify();
+    if (!mounted) return;
+    Amplify.addPlugin(AmplifyAuthCognito());
+    Amplify.configure(amplifyconfig);
   }
 
   void setTheme(theme) {
@@ -47,30 +46,13 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void _configureAmplify() async {
-    if (!mounted) return;
-
-    AmplifyAuthCognito authPlugin = AmplifyAuthCognito();
-    amplifyInstance.addPlugin(authPlugins: [authPlugin]);
-
-    await amplifyInstance.configure(amplifyconfig);
-
-    try {
-      setState(() {
-        this.amplifyConfigured = true;
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: themes.themeOf[theme],
       routes: {
-        '/FirstPage': (context) => FirstPage(setTheme: setTheme),
+        '/FirstPage': (context) => FirstPage(key: 'LoggedOut', setTheme: setTheme),
         '/': (context) => AuthCheck(),
         '/SignUpPhoneNo': (context) => SignUpPhoneNo(),
         '/SignUpOTP': (context) => SignUpOTP(),

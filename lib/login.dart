@@ -1,6 +1,6 @@
+import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
-import 'package:amplify_core/amplify_core.dart';
 import 'dart:math';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -89,7 +89,7 @@ class _Login extends State<Login> {
                 padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
                 child: Row(children: <Widget>[
                   Expanded(
-                    child: FlatButton(
+                    child: TextButton(
                       onPressed: () async {
                         try {
                           SignInResult res = await Amplify.Auth.signIn(
@@ -107,12 +107,11 @@ class _Login extends State<Login> {
                             Navigator.pushReplacementNamed(
                                 context, '/HomePage');
                           }
-                        } on AuthError catch (e) {
+                        } catch (e) {
                           print(e);
                         }
                       },
                       child: Text('Sign In'),
-                      color: Colors.amber,
                     ),
                   ),
                 ]),
@@ -129,10 +128,9 @@ class PasswordField extends StatefulWidget {
   final TextEditingController controller;
 
   const PasswordField({
-    Key key,
-    @required this.controller,
-  })  : assert(controller != null),
-        super(key: key);
+    key,
+    required this.controller,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _PasswordField();
@@ -159,8 +157,8 @@ class _PasswordField extends State<PasswordField> {
         ),
       ),
       obscureText: !_showPassword,
-      validator: (String value) {
-        if (value.isEmpty) {
+      validator: (String? value) {
+        if (value == null || value.isEmpty) {
           return 'Please enter your password';
         } else
           return 'All good';

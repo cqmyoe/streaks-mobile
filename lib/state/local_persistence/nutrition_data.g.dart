@@ -1,34 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'habit_data.dart';
+part of 'nutrition_data.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class HabitDataAdapter extends TypeAdapter<HabitData> {
+class NutritionDataAdapter extends TypeAdapter<NutritionData> {
   @override
-  final int typeId = 4;
+  final int typeId = 5;
 
   @override
-  HabitData read(BinaryReader reader) {
+  NutritionData read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return HabitData(
-      fields[0] as String,
-      (fields[1] as Map)?.cast<String, bool>(),
+    return NutritionData(
+      fields[0].cast<String>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, HabitData obj) {
+  void write(BinaryWriter writer, NutritionData obj) {
     writer
-      ..writeByte(2)
-      ..writeByte(0)
-      ..write(obj.name)
       ..writeByte(1)
+      ..writeByte(0)
       ..write(obj.record);
   }
 
@@ -38,7 +35,7 @@ class HabitDataAdapter extends TypeAdapter<HabitData> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is HabitDataAdapter &&
+      other is NutritionDataAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

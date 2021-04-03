@@ -17,10 +17,15 @@ class _AuthCheck extends State<AuthCheck> {
 
   getData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    String phoneNo = pref.getString('phoneNo');
-    String route = '/FirstPage';
-    if (phoneNo != null) {
-      route = '/HomePage';
+    String route = '/HomePage';
+    try {
+      String? phoneNo = pref.getString('phoneNo');
+      if (phoneNo == '') {
+        route = '/FirstPage';
+      }
+    } catch (e) {
+      print({'err': e, 'msg': 'Unable to read phoneNo'});
+      route = '/FirstPage';
     }
     Timer(Duration(seconds: 1),
         () => Navigator.pushReplacementNamed(context, route));
@@ -43,8 +48,9 @@ class _AuthCheck extends State<AuthCheck> {
                 style: Theme.of(context).textTheme.headline5,
               ),
               SpinKitThreeBounce(
-                color: Theme.of(context).textTheme.headline5.color,
-                size: Theme.of(context).textTheme.headline5.fontSize,
+                color:
+                    Theme.of(context).textTheme.headline5?.color ?? Colors.red,
+                size: Theme.of(context).textTheme.headline5?.fontSize ?? 16,
               ),
             ])
           ],

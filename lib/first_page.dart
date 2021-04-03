@@ -1,17 +1,16 @@
-import 'package:Streaks/Themes/Colors.dart';
+import 'package:streaks/Themes/Colors.dart';
 import 'package:flutter/material.dart' hide Colors;
 
 class FirstPage extends StatefulWidget {
-  FirstPage({Key key, this.setTheme}) : super(key: key);
   final Function setTheme;
 
+  FirstPage({key, required this.setTheme}) : super(key: key);
+
   @override
-  _FirstPage createState() => _FirstPage(setTheme: setTheme);
+  _FirstPage createState() => _FirstPage(setTheme: this.setTheme);
 }
 
 class _FirstPage extends State<FirstPage> {
-  _FirstPage({Key key, this.setTheme});
-
   final Function setTheme;
   final themes = [
     {'name': 'Red', 'color': Colors.PrimaryRed},
@@ -19,6 +18,8 @@ class _FirstPage extends State<FirstPage> {
     {'name': 'Dark', 'color': Colors.PrimaryBlack},
     {'name': 'Light', 'color': Colors.GreyLighten50}
   ];
+
+  _FirstPage({required this.setTheme});
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +37,11 @@ class _FirstPage extends State<FirstPage> {
               children: [
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                  child: FlatButton(
-                    padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      primary: Theme.of(context).accentColor,
+                      padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                    ),
                     onPressed: () {
                       Navigator.pushNamed(context, '/SignUpPhoneNo');
                     },
@@ -45,14 +49,16 @@ class _FirstPage extends State<FirstPage> {
                       'Sign Up',
                       style: Theme.of(context).primaryTextTheme.headline5,
                     ),
-                    color: Theme.of(context).accentColor,
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
                   margin: EdgeInsets.fromLTRB(0, 0, 0, 100),
-                  child: FlatButton(
-                    padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      primary: Theme.of(context).primaryColor,
+                      padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                    ),
                     onPressed: () {
                       Navigator.pushNamed(context, '/LogIn');
                     },
@@ -60,19 +66,20 @@ class _FirstPage extends State<FirstPage> {
                       'Log In',
                       style: Theme.of(context).primaryTextTheme.headline5,
                     ),
-                    color: Theme.of(context).primaryColor,
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: this
                       .themes
-                      .map((theme) => RaisedButton(
+                      .map((theme) => ElevatedButton(
+                          child: Text(''),
                           onPressed: () {
                             this.setTheme(theme['name']);
                           },
-                          shape: CircleBorder(),
-                          color: theme['color']))
+                          style: ElevatedButton.styleFrom(
+                              shape: CircleBorder(),
+                              primary: Colors.PrimaryRed)))
                       .toList(),
                 )
               ],

@@ -1,4 +1,4 @@
-import 'package:Streaks/search.dart';
+import 'package:streaks/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

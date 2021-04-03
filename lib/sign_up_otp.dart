@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_core/amplify_core.dart';
 
 class SignUpOTP extends StatefulWidget {
   @override
@@ -20,7 +20,7 @@ class _SignUpOTP extends State<SignUpOTP> {
 
   @override
   Widget build(BuildContext context) {
-    userAttributes = ModalRoute.of(context).settings.arguments;
+    userAttributes = ((ModalRoute.of(context)?.settings.arguments ?? {}) as Map);
     print(userAttributes);
 
     return MaterialApp(
@@ -32,7 +32,7 @@ class _SignUpOTP extends State<SignUpOTP> {
         appBar: AppBar(
           title: Text('Streaks'),
           centerTitle: true,
-          backgroundColor: Colors.red,
+          backgroundColor: Theme.of(context).backgroundColor,
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -59,7 +59,7 @@ class _SignUpOTP extends State<SignUpOTP> {
                 alignment: AlignmentDirectional.center,
                 child: Icon(
                   Icons.account_box,
-                  color: Colors.blueAccent,
+                  color: Theme.of(context).accentColor,
                   size: 100.0,
                 ),
               ),
@@ -86,7 +86,7 @@ class _SignUpOTP extends State<SignUpOTP> {
                 padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
                 child: Row(children: <Widget>[
                   Expanded(
-                    child: FlatButton(
+                    child: TextButton(
                       onPressed: () async {
                         try {
                           // ignore: unused_local_variable
@@ -96,12 +96,12 @@ class _SignUpOTP extends State<SignUpOTP> {
                           );
                           Navigator.pushNamed(context, '/HomePage',
                               arguments: userAttributes);
-                        } on AuthError catch (e) {
+                        } catch (e) {
                           print(e);
                         }
                       },
                       child: Text('Submit'),
-                      color: Colors.amber,
+                      style: TextButton.styleFrom(primary: Theme.of(context).primaryColor),
                     ),
                   ),
                 ]),
