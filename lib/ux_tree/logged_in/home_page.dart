@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'meal_screen.dart';
-import 'nutrition_data_load.dart';
+import 'meals/meal_screen.dart';
+import 'insights/nutrition_data_load.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage() : super();
