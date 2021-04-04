@@ -1,5 +1,5 @@
 import 'package:google_fonts/google_fonts.dart';
-import 'package:streaks/Themes/Colors.dart';
+import 'Colors.dart';
 import 'package:flutter/material.dart' hide Colors;
 
 final ThemeData themeData = ThemeData(

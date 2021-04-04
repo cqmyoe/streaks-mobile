@@ -5,15 +5,15 @@ import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-import 'package:streaks/Themes/Themes.dart' as themes;
-import 'package:streaks/sign_up_phone_no.dart';
-import 'package:streaks/first_page.dart';
-import 'package:streaks/sign_up_otp.dart';
-import 'package:streaks/home_page.dart';
-import 'package:streaks/Login.dart';
-import 'package:streaks/AuthCheck.dart';
-import 'package:streaks/state/local_persistence/habit_data.dart';
-import 'package:streaks/state/local_persistence/nutrition_data.dart';
+import 'themes/themes.dart' as themes;
+import 'sign_up_phone_no.dart';
+import 'first_page.dart';
+import 'sign_up_otp.dart';
+import 'home_page.dart';
+import 'Login.dart';
+import 'AuthCheck.dart';
+import 'state/repository/device/habit_data.dart';
+import 'state/repository/device/nutrition_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

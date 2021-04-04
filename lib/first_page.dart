@@ -1,4 +1,4 @@
-import 'package:streaks/Themes/Colors.dart';
+import 'Themes/Colors.dart';
 import 'package:flutter/material.dart' hide Colors;
 
 class FirstPage extends StatefulWidget {

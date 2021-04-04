@@ -1,9 +1,9 @@
-import 'package:streaks/state/local_persistence/nutrition_data.dart';
+import 'state/repository/device/nutrition_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:streaks/state/local_persistence/date_time.dart';
+import 'state/repository/device/date_time.dart';
 
 class Nutrition extends StatefulWidget {
   @override
