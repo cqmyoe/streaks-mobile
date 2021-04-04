@@ -1,25 +1,7 @@
-import 'Themes/Colors.dart';
 import 'package:flutter/material.dart' hide Colors;
 
-class FirstPage extends StatefulWidget {
-  final Function setTheme;
-
-  FirstPage({key, required this.setTheme}) : super(key: key);
-
-  @override
-  _FirstPage createState() => _FirstPage(setTheme: this.setTheme);
-}
-
-class _FirstPage extends State<FirstPage> {
-  final Function setTheme;
-  final themes = [
-    {'name': 'Red', 'color': Colors.PrimaryRed},
-    {'name': 'Blue', 'color': Colors.PrimaryBlue},
-    {'name': 'Dark', 'color': Colors.PrimaryBlack},
-    {'name': 'Light', 'color': Colors.GreyLighten50}
-  ];
-
-  _FirstPage({required this.setTheme});
+class FirstPage extends StatelessWidget {
+  FirstPage() : super();
 
   @override
   Widget build(BuildContext context) {
@@ -68,20 +50,20 @@ class _FirstPage extends State<FirstPage> {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: this
-                      .themes
-                      .map((theme) => ElevatedButton(
-                          child: Text(''),
-                          onPressed: () {
-                            this.setTheme(theme['name']);
-                          },
-                          style: ElevatedButton.styleFrom(
-                              shape: CircleBorder(),
-                              primary: Colors.PrimaryRed)))
-                      .toList(),
-                )
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: this
+                //       .themes
+                //       .map((theme) => ElevatedButton(
+                //           child: Text(''),
+                //           onPressed: () {
+                //             this.setTheme(theme['name']);
+                //           },
+                //           style: ElevatedButton.styleFrom(
+                //               shape: CircleBorder(),
+                //               primary: Colors.PrimaryRed)))
+                //       .toList(),
+                // )
               ],
             )),
       ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'PrimaryRed.dart' as PrimaryRed;
-import 'PrimaryBlue.dart' as PrimaryBlue;
-import 'PrimaryDark.dart' as PrimaryDark;
-import 'PrimaryLight.dart' as PrimaryLight;
+import 'primary_red.dart' as PrimaryRed;
+import 'primary_blue.dart' as PrimaryBlue;
+import 'primary_dark.dart' as PrimaryDark;
+import 'primary_light.dart' as PrimaryLight;
 
 Map<String, ThemeData> themeOf = {
   'Red': PrimaryRed.themeData,

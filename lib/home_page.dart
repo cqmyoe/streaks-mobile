@@ -2,21 +2,15 @@ import 'package:flutter/material.dart';
 import 'meal_screen.dart';
 import 'nutrition_data_load.dart';
 
-class MyHomePage extends StatefulWidget {
-  final String title;
-  MyHomePage({key, required this.title}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  void _closeDrawer() {
-    Navigator.of(context).pop();
-  }
+class MyHomePage extends StatelessWidget {
+  MyHomePage() : super();
 
   @override
   Widget build(BuildContext context) {
+    void _closeDrawer() {
+      Navigator.of(context).pop();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
