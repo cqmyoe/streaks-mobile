@@ -14,7 +14,7 @@ import 'aspects/configuration/config_provider.dart';
 import 'aspects/logging/log_provider.dart';
 import 'aspects/themes/themes.dart' as themes;
 import 'state/providers/change_logger.dart';
-import 'state/providers/user_preferences.dart';
+import 'state/providers/preferences.dart';
 import 'ux_tree/logged_out/sign_up_phone_no.dart';
 import 'ux_tree/logged_out/login_or_signup.dart';
 import 'ux_tree/logged_out/sign_up_otp.dart';
@@ -24,13 +24,16 @@ import 'ux_tree/auth_check.dart';
 import 'state/repository/device/habit_data.dart';
 import 'state/repository/device/nutrition_data.dart';
 
-void main() {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   final providers = ProviderContainer();
   providers.read(envProvider).state = Env.Dev;
 
+  final locale = providers.read(localeProvider).state;
   final i18nDelegate = providers.read(i18nProvider);
+  await i18nDelegate.load(Locale(locale));
+  
   final logger = providers.read(logProvider('main'));
   final isVerbose = Logger.level == Level.verbose;
 
@@ -46,8 +49,8 @@ class MyApp extends ConsumerWidget {
 
   @override
   createState() {
-     _configureAmplify();
-     _initDeviceRepository();
+    _configureAmplify();
+    _initDeviceRepository();
     return super.createState();
   }
 
@@ -77,6 +80,10 @@ class MyApp extends ConsumerWidget {
         this.i18nDelegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: [
+        const Locale('en'), // English
+        const Locale('hi') // Hindi
       ],
       routes: {
         '/FirstPage': (context) => FirstPage(),

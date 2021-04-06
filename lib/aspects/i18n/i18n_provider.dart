@@ -4,7 +4,7 @@ import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:streaks/aspects/logging/log_provider.dart';
-import 'package:streaks/state/providers/user_preferences.dart';
+import 'package:streaks/state/providers/preferences.dart';
 
 FlutterI18nDelegate streaksI18nDelegate({required Reader read}) {
   String locale = read(localeProvider).state;
@@ -14,11 +14,11 @@ FlutterI18nDelegate streaksI18nDelegate({required Reader read}) {
       decodeStrategies: [JsonDecodeStrategy()],
       namespaces: [
         "auth",
-        "drj_rules",
+        "rules",
         "foods",
         "main",
         "portions",
-        "user_preferences"
+        "preferences"
       ],
       useCountryCode: false,
       fallbackDir: 'en',

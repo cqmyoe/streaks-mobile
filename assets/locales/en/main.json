@@ -1,3 +1,13 @@
 {
-    "title": "Streaks of Nutrition"
+    "title": "CqMyOE via Nutrition",
+    "home": "Home",
+    "drawer": "This is the Drawer",
+    "close_drawer": "Close Drawer",
+    "theme_picker": "Pick a Color Theme",
+    "food_value": "Enter value",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "meals": "Meals",
+    "how_am_i_doing": "How am I doing?",
+    "show_meals": "Show my Meals"
 }

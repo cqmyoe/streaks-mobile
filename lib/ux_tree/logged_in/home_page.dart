@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_i18n/widgets/I18nText.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:streaks/state/providers/user_preferences.dart';
+import 'package:streaks/state/providers/preferences.dart';
 import 'meals/meal_screen.dart';
 import 'insights/nutrition_data_load.dart';
 import 'package:streaks/aspects/themes/themes.dart' as themes;
@@ -16,42 +18,9 @@ class MyHomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: I18nText('main.home'),
         automaticallyImplyLeading: true,
         titleSpacing: 0.0,
-        /*actions: <Widget>[
-            SizedBox(
-              width: 40.0,
-              child: TextButton(
-                child: Text('U3'),
-                color: const Color(0xFFCCA5F5),
-                padding: EdgeInsets.all(0.0),
-                shape: CircleBorder(),
-                onPressed: () {},
-              ),
-            ),
-            SizedBox(width: 5),
-            SizedBox(
-                width: 40.0,
-                child: TextButton(
-                  child: Text('U2'),
-                  color: const Color(0xFF42A5A5),
-                  padding: EdgeInsets.all(0.0),
-                  shape: CircleBorder(),
-                  onPressed: () {},
-                )),
-            SizedBox(width: 5),
-            SizedBox(
-                width: 40.0,
-                child: TextButton(
-                  child: Text('U1'),
-                  color: const Color(0xBB42A5F5),
-                  padding: EdgeInsets.all(0.0),
-                  shape: CircleBorder(),
-                  onPressed: () {},
-                )),
-            SizedBox(width: 15)
-          ]*/
       ),
       drawer: Drawer(
         child: Center(
@@ -59,14 +28,14 @@ class MyHomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                const Text('This is the Drawer'),
+                I18nText('main.drawer'),
                 ElevatedButton(
                   onPressed: _closeDrawer,
-                  child: const Text('Close Drawer'),
+                  child: I18nText('main.close_drawer'),
                 )
               ]),
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                const Text('Pick a Color Theme'),
+                I18nText('main.theme_picker'),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: themes.themeOf.entries.map((theme) {
@@ -97,7 +66,7 @@ class MyHomePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => MealPage()),
                 );
               },
-              child: Text("Enter Meals"),
+              child: I18nText('main.show_meals'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -106,7 +75,7 @@ class MyHomePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => NutritionDataLoad()),
                 );
               },
-              child: Text("Insight"),
+              child: I18nText('main.how_am_i_doing'),
             )
           ],
         ),

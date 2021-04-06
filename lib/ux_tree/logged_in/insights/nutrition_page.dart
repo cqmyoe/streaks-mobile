@@ -1,3 +1,5 @@
+import 'package:flutter_i18n/widgets/I18nText.dart';
+
 import '../../../state/repository/device/nutrition_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,20 +24,20 @@ class _Nutrition extends State<Nutrition> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Enter value'),
+          title: I18nText('main.food_value'),
           content: TextField(
             controller: myController,
             keyboardType: TextInputType.number,
           ),
           actions: [
             TextButton(
-              child: Text('Submit'),
+              child: I18nText('main.submit'),
               onPressed: () {
                 Navigator.of(context).pop(myController.text.toString());
               },
             ),
             TextButton(
-              child: Text('Cancel'),
+              child: I18nText('main.cancel'),
               onPressed: () {
                 Navigator.of(context).pop(null);
               },
@@ -53,19 +55,19 @@ class _Nutrition extends State<Nutrition> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Enter value'),
+          title: I18nText('rules.food_value'),
           content: TextField(
             controller: myController,
           ),
           actions: [
             TextButton(
-              child: Text('Submit'),
+              child: I18nText('main.submit'),
               onPressed: () {
                 Navigator.of(context).pop(myController.text.toString());
               },
             ),
             TextButton(
-              child: Text('Cancel'),
+              child: I18nText('main.cancel'),
               onPressed: () {
                 Navigator.of(context).pop(null);
               },
@@ -93,11 +95,11 @@ class _Nutrition extends State<Nutrition> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('CqMyOE via Nutrition'),
+        backgroundColor: Theme.of(context).primaryColor,
+        title: I18nText('main.title'),
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: Colors.grey[200],
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -158,7 +160,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Calories'),
+                        child: I18nText('rules.calories'),
                       ),
                     ),
                     Expanded(
@@ -204,7 +206,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Net Carbs'),
+                        child: I18nText('rules.net_carbs'),
                       ),
                     ),
                     Expanded(
@@ -250,7 +252,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Proteins'),
+                        child: I18nText('rules.proteins'),
                       ),
                     ),
                     Expanded(
@@ -296,7 +298,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Pure Fats'),
+                        child: I18nText('rules.pure_fats'),
                       ),
                     ),
                     Expanded(
@@ -342,7 +344,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Green juice (in glass)'),
+                        child: I18nText('rules.green_juice'),
                       ),
                     ),
                     Expanded(
@@ -388,7 +390,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Green intake (in cups)'),
+                        child: I18nText('rules.green_raw'),
                       ),
                     ),
                     Expanded(
@@ -434,7 +436,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Lemon'),
+                        child: I18nText('rules.lemon'),
                       ),
                     ),
                     Expanded(
@@ -480,7 +482,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('ACV (in tea spoons)'),
+                        child: I18nText('rules.acv'),
                       ),
                     ),
                     Expanded(
@@ -526,7 +528,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Intermittent Fasting'),
+                        child: I18nText('rules.intermittent_fasting'),
                       ),
                     ),
                     Expanded(
@@ -572,7 +574,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Salt awareness' + k.toString()),
+                        child: I18nText('rules.salt_awarness'),
                       ),
                     ),
                     Expanded(
@@ -596,7 +598,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Yog/Walk/Stairs'),
+                        child: I18nText('rules.yog_walk_stairs'),
                       ),
                     ),
                     Expanded(
@@ -620,7 +622,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Sleep of 7-8 hours'),
+                        child: I18nText('rules.sleep'),
                       ),
                     ),
                     Expanded(
@@ -644,7 +646,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Kaizen 1% improvement'),
+                        child: I18nText('rules.1_percent_improvement'),
                       ),
                     ),
                     Expanded(
@@ -668,7 +670,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Soaked nuts'),
+                        child: I18nText('rules.nuts'),
                       ),
                     ),
                     Expanded(
@@ -714,7 +716,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Seeds'),
+                        child: I18nText('rules.seeds'),
                       ),
                     ),
                     Expanded(
@@ -760,7 +762,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Sugar (in table spoons)'),
+                        child: I18nText('rules.direct_or_indirect_sugar'),
                       ),
                     ),
                     Expanded(
@@ -806,7 +808,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Sunlight'),
+                        child: I18nText('rules.sunlight'),
                       ),
                     ),
                     Expanded(
@@ -852,7 +854,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Breathing'),
+                        child: I18nText('rules.breathing'),
                       ),
                     ),
                     Expanded(
@@ -898,7 +900,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Ready for tomorrow'),
+                        child: I18nText('rules.ready_for_tom'),
                       ),
                     ),
                     Expanded(
@@ -944,7 +946,7 @@ class _Nutrition extends State<Nutrition> {
                       flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                        child: Text('Sources of Fat'),
+                        child: I18nText('rules.source_fats'),
                       ),
                     ),
                     Expanded(

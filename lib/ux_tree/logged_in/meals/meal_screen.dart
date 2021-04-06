@@ -1,3 +1,5 @@
+import 'package:flutter_i18n/widgets/I18nText.dart';
+
 import 'new_meal/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,7 @@ class _MealPageState extends State<MealPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Meal Screen'),
+        title: I18nText('main.meals'),
       ),
       body: SingleChildScrollView(
         child: Column(
