@@ -1,4 +1,6 @@
+// import 'dart:async';
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -34,14 +36,14 @@ class _AuthCheck extends State<AuthCheck> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Theme.of(context).splashColor,
+        color: Theme.of(context).primaryColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Image(
                 width: 150,
                 height: 150,
-                image: AssetImage('assets/images/logo_splash.png')),
+                image: AssetImage('assets/images/logo_splash_new.png')),
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
                 'Logging In',
@@ -49,8 +51,8 @@ class _AuthCheck extends State<AuthCheck> {
               ),
               SpinKitThreeBounce(
                 color:
-                    Theme.of(context).textTheme.headline5?.color ?? Colors.red,
-                size: Theme.of(context).textTheme.headline5?.fontSize ?? 16,
+                    Theme.of(context).primaryColor,
+                size: Theme.of(context).textTheme.bodyText1?.fontSize ?? 16,
               ),
             ])
           ],
