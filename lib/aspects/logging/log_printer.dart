@@ -11,6 +11,7 @@ class StreaksPrinter extends LogPrinter {
     var color = PrettyPrinter.levelColors[event.level];
     var emoji = PrettyPrinter.levelEmojis[event.level];
     var line = [className, event.message, event.error, event.stackTrace]
+        .where((line) => line != null)
         .map((line) => line.toString())
         .toList()
         .join(" >> ");

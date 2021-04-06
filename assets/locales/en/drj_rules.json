@@ -1,0 +1,22 @@
+{
+    "green_juice": "Green juice (glass)",
+    "green_raw": "Green intake (raw including juice, teacups)",
+    "lemon": "Lemon (number)",
+    "acv": "ACV (table spoon)",
+    "fermented_food": "Fermented food (Y/N & what?)",
+    "nuts": "Nuts (number)",
+    "seeds": "Seeds (table spoons)",
+    "salt_awarness": "Salt awareness(Y/N)",
+    "direct_or_indirect_sugar": "Direct or indirect sugar (table spoon)",
+    "intermittent_fasting": "Intermittent fasting (hours)",
+    "yog": "Yog (Y/N)",
+    "walk": "Walk (minutes)",
+    "stairs": "Stair (floors)",
+    "sleep": "Sleep (hours)",
+    "sunlight": "Sunlight (minutes)",
+    "breathing": "Breathing exercise (minute)",
+    "1_percent_improvement": "1% improvement (Y/N & what?)",
+    "ready_for_tom": "Ready for tom (Y/N)",
+    "brief_diet_chart": "Brief diet chart",
+    "notes_to_self": "Notes to myself"
+}

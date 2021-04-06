@@ -3,11 +3,6 @@ import 'colors.dart';
 import 'package:flutter/material.dart' hide Colors;
 
 ThemeData themeData = ThemeData(
-  brightness: Brightness.dark,
-  primaryColor: Colors.PrimaryRed,
-  accentColor: Colors.PrimaryBlue,
-  highlightColor: Colors.RedLighten40,
-  splashColor: Colors.BlueDarken40,
-  backgroundColor: Colors.RedLighten80,
+  primarySwatch: createMaterialColor(Colors.PrimaryRed),
   textTheme: GoogleFonts.nunitoSansTextTheme(),
 );

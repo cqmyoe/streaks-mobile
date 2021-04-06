@@ -49,21 +49,7 @@ class FirstPage extends StatelessWidget {
                       style: Theme.of(context).primaryTextTheme.headline5,
                     ),
                   ),
-                ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: this
-                //       .themes
-                //       .map((theme) => ElevatedButton(
-                //           child: Text(''),
-                //           onPressed: () {
-                //             this.setTheme(theme['name']);
-                //           },
-                //           style: ElevatedButton.styleFrom(
-                //               shape: CircleBorder(),
-                //               primary: Colors.PrimaryRed)))
-                //       .toList(),
-                // )
+                )
               ],
             )),
       ),

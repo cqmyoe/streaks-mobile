@@ -6,8 +6,8 @@ import 'primary_dark.dart' as PrimaryDark;
 import 'primary_light.dart' as PrimaryLight;
 
 Map<String, ThemeData> themeOf = {
-  'Red': PrimaryRed.themeData,
-  'Blue': PrimaryBlue.themeData,
-  'Dark': PrimaryDark.themeData,
-  'Light': PrimaryLight.themeData
+  'red': PrimaryRed.themeData,
+  'blue': PrimaryBlue.themeData,
+  'dark': PrimaryDark.themeData,
+  'light': PrimaryLight.themeData
 };

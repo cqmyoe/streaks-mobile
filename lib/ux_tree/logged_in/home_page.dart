@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:streaks/state/providers/user_preferences.dart';
 import 'meals/meal_screen.dart';
 import 'insights/nutrition_data_load.dart';
+import 'package:streaks/aspects/themes/themes.dart' as themes;
 
 class MyHomePage extends StatelessWidget {
   MyHomePage() : super();
@@ -53,13 +56,31 @@ class MyHomePage extends StatelessWidget {
       drawer: Drawer(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text('This is the Drawer'),
-              ElevatedButton(
-                onPressed: _closeDrawer,
-                child: const Text('Close Drawer'),
-              ),
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                const Text('This is the Drawer'),
+                ElevatedButton(
+                  onPressed: _closeDrawer,
+                  child: const Text('Close Drawer'),
+                )
+              ]),
+              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                const Text('Pick a Color Theme'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: themes.themeOf.entries.map((theme) {
+                    return ElevatedButton(
+                        child: Text(''),
+                        onPressed: () {
+                          context.read(themeProvider).state = theme.key;
+                        },
+                        style: ElevatedButton.styleFrom(
+                            shape: CircleBorder(),
+                            primary: theme.value.primaryColor));
+                  }).toList(),
+                )
+              ])
             ],
           ),
         ),
@@ -86,7 +107,7 @@ class MyHomePage extends StatelessWidget {
                 );
               },
               child: Text("Insight"),
-            ),
+            )
           ],
         ),
       ),
