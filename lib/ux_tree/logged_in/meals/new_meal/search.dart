@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:streaks/ux_tree/logged_in/meals/new_meal/portion_size.dart';
+
+import '../meal_screen.dart';
 
 class NameSearch extends SearchDelegate<String> {
-  final List<String> names;
-  String? result;
+  final List<foodClass> names;
+  String result = '';
   NameSearch(this.names);
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -21,26 +24,30 @@ class NameSearch extends SearchDelegate<String> {
     return IconButton(
       icon: Icon(Icons.arrow_back),
       onPressed: () {
-        close(context, result ?? '');
+        close(context, result);
       },
     );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    final suggestions =
-        names.where((name) => name.toLowerCase().contains(query.toLowerCase()));
+    final suggestions = names.where(
+        (name) => name.foodName.toLowerCase().contains(query.toLowerCase()));
 
     return ListView.builder(
       itemCount: suggestions.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
           title: Text(
-            suggestions.elementAt(index),
+            suggestions.elementAt(index).foodName,
           ),
-          onTap: () {
-            result = suggestions.elementAt(index);
-            close(context, result ?? '');
+          onTap: () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PortionSize()),
+            );
+            result = suggestions.elementAt(index).foodName;
+            close(context, result);
           },
         );
       },
@@ -49,18 +56,18 @@ class NameSearch extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestions =
-        names.where((name) => name.toLowerCase().contains(query.toLowerCase()));
+    final suggestions = names.where(
+        (name) => name.foodName.toLowerCase().contains(query.toLowerCase()));
 
     return ListView.builder(
       itemCount: suggestions.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
           title: Text(
-            suggestions.elementAt(index),
+            suggestions.elementAt(index).foodName,
           ),
           onTap: () {
-            query = suggestions.elementAt(index);
+            query = suggestions.elementAt(index).foodName;
           },
         );
       },

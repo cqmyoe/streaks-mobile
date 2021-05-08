@@ -2,14 +2,14 @@ import '../../../state/repository/device/date_time.dart';
 import '../../../state/repository/device/nutrition_data.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'nutrition_page.dart';
+import 'home_page.dart';
 
-class NutritionDataLoad extends StatefulWidget {
+class HomePageDataLoad extends StatefulWidget {
   @override
-  _NutritionDataLoad createState() => _NutritionDataLoad();
+  _HomePageDataLoad createState() => _HomePageDataLoad();
 }
 
-class _NutritionDataLoad extends State<NutritionDataLoad> {
+class _HomePageDataLoad extends State<HomePageDataLoad> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -40,7 +40,7 @@ class _NutritionDataLoad extends State<NutritionDataLoad> {
               NutritionData temp1 = new NutritionData(temp);
               nutritionDB.put(day3, temp1);
             }
-            return Nutrition();
+            return HomePage();
           }
         } else
           return Scaffold();

@@ -1,18 +1,23 @@
 import 'package:flutter_i18n/widgets/I18nText.dart';
+import 'package:streaks/ux_tree/logged_in/meals/meal_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:streaks/state/providers/preferences.dart';
 
 import '../../../state/repository/device/nutrition_data.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import '../../../state/repository/device/date_time.dart';
+import 'package:streaks/aspects/themes/themes.dart' as themes;
 
-class Nutrition extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _Nutrition createState() => _Nutrition();
+  _HomePage createState() => _HomePage();
 }
 
-class _Nutrition extends State<Nutrition> {
+class _HomePage extends State<HomePage> {
   final nutritionDB = Hive.box<NutritionData>('NutritionDB');
   DateTime now = DateTime.now().toLocal();
   int k = 0;
@@ -93,10 +98,47 @@ class _Nutrition extends State<Nutrition> {
           : TextButton.styleFrom(primary: Theme.of(context).primaryColor);
     }
 
+    void _closeDrawer() {
+      Navigator.of(context).pop();
+    }
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: I18nText('main.title'),
+        title: I18nText('main.home'),
+        automaticallyImplyLeading: true,
+        titleSpacing: 0.0,
+      ),
+      drawer: Drawer(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                I18nText('main.drawer'),
+                ElevatedButton(
+                  onPressed: _closeDrawer,
+                  child: I18nText('main.close_drawer'),
+                )
+              ]),
+              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                I18nText('main.theme_picker'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: themes.themeOf.entries.map((theme) {
+                    return ElevatedButton(
+                        child: Text(''),
+                        onPressed: () {
+                          context.read(themeProvider).state = theme.key;
+                        },
+                        style: ElevatedButton.styleFrom(
+                            shape: CircleBorder(),
+                            primary: theme.value.primaryColor));
+                  }).toList(),
+                )
+              ])
+            ],
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -986,6 +1028,15 @@ class _Nutrition extends State<Nutrition> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MealPage()),
+          );
+        },
+        child: Text('Add meals'),
       ),
     );
   }

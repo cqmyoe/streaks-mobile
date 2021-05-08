@@ -56,7 +56,7 @@ class _MealPageState extends State<MealPage> {
                           onPressed: () async {
                             final result = await showSearch<String>(
                               context: context,
-                              delegate: NameSearch(names),
+                              delegate: NameSearch(foods),
                             );
                             setState(() {
                               meal1List.add(result);
@@ -114,7 +114,7 @@ class _MealPageState extends State<MealPage> {
                           onPressed: () async {
                             final result = await showSearch<String>(
                               context: context,
-                              delegate: NameSearch(names),
+                              delegate: NameSearch(foods),
                             );
                             setState(() {
                               meal2List.add(result);
@@ -172,7 +172,7 @@ class _MealPageState extends State<MealPage> {
                           onPressed: () async {
                             final result = await showSearch<String>(
                               context: context,
-                              delegate: NameSearch(names),
+                              delegate: NameSearch(foods),
                             );
                             setState(() {
                               meal3List.add(result);
@@ -230,7 +230,7 @@ class _MealPageState extends State<MealPage> {
                           onPressed: () async {
                             final result = await showSearch<String>(
                               context: context,
-                              delegate: NameSearch(names),
+                              delegate: NameSearch(foods),
                             );
                             setState(() {
                               meal4List.add(result);
@@ -288,7 +288,7 @@ class _MealPageState extends State<MealPage> {
                           onPressed: () async {
                             final result = await showSearch<String>(
                               context: context,
-                              delegate: NameSearch(names),
+                              delegate: NameSearch(foods),
                             );
                             setState(() {
                               meal5List.add(result);
@@ -332,3 +332,27 @@ const names = [
   'Sambar',
   'Curry',
 ];
+
+var foods = [
+  foodClass('Wheat Roti', [2, 0, 17, 0, 0, 2, 67, 12, 85],
+      [portion('Roti', 1), portion('grams', 1 / 35)]),
+  foodClass('Chicken Soup', [16.8, 9.1, 0, 0, 2, 2.3, 32, 1.1, 130],
+      [portion('Bowl', 1), portion('grams', 1 / 350)]),
+  foodClass('Papad', [2.1, 0, 6, 1.6, 0, 1.6, 49, 1.3, 46],
+      [portion('Piece', 1), portion('grams', 1 / 12)]),
+  foodClass('Cabbage Sabzi', [1.5, 5.7, 0, 0, 4.2, 2.6, 45, 0.9, 62],
+      [portion('Katori', 1), portion('grams', 1 / 100)]),
+];
+
+class foodClass {
+  String foodName;
+  List<double> valueList;
+  List<portion> portionList;
+  foodClass(this.foodName, this.valueList, this.portionList);
+}
+
+class portion {
+  String type;
+  double multiplier;
+  portion(this.type, this.multiplier);
+}

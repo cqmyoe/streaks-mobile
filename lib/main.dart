@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:streaks/aspects/i18n/i18n_provider.dart';
+import 'package:streaks/ux_tree/logged_in/insights/home_page_data_load.dart';
 import 'aspects/configuration/amplify_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify.dart';
@@ -18,7 +19,6 @@ import 'state/providers/preferences.dart';
 import 'ux_tree/logged_out/sign_up_phone_no.dart';
 import 'ux_tree/logged_out/login_or_signup.dart';
 import 'ux_tree/logged_out/sign_up_otp.dart';
-import 'ux_tree/logged_in/home_page.dart';
 import 'ux_tree/logged_out/login.dart';
 import 'ux_tree/auth_check.dart';
 import 'state/repository/device/habit_data.dart';
@@ -33,7 +33,7 @@ Future main() async {
   final locale = providers.read(localeProvider).state;
   final i18nDelegate = providers.read(i18nProvider);
   await i18nDelegate.load(Locale(locale));
-  
+
   final logger = providers.read(logProvider('main'));
   final isVerbose = Logger.level == Level.verbose;
 
@@ -90,7 +90,7 @@ class MyApp extends ConsumerWidget {
         '/': (context) => AuthCheck(),
         '/SignUpPhoneNo': (context) => SignUpPhoneNo(),
         '/SignUpOTP': (context) => SignUpOTP(),
-        '/HomePage': (context) => MyHomePage(),
+        '/HomePage': (context) => HomePageDataLoad(),
         '/LogIn': (context) => Login(),
       },
     );
